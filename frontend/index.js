@@ -26,7 +26,10 @@ function getProducts(){
 }
 
 function fillPage(products){
-
+    // Remplir la page des produits en suivant le template
+    for (const product of products) {
+        showProduct(product);
+    }
 }
 
 function showProduct(product){
