@@ -55,7 +55,39 @@
         </header>
         <!-- CONTENU -->
         <main>
-            
+            <!-- SECTION 1 - PRÉSENTATION -->
+            <section class="container">
+                <div class="row my-5">
+                    <div class="col text-center">
+                        <h1>Orinoco</h1>
+                        <h2>Bienvenue sur le meilleur site de vente en ligne d'ours en peluche !</h2>
+                    </div>
+                </div>
+            </section>
+            <!-- SECTION 2 - ARTICLES -->
+            <section class="container-fluid bg-primary px-5 py-3 mb-5">
+                <div class="row">
+                    <div class="col my-3">
+                        <h3 class="h4">Découvrez notre sélection de peluches à calîner pour les petits et les grands et sélectionnez le modèle de votre choix</h3>
+                    </div>
+                </div>
+                <div class="row pb-2" id="productsList">
+                        <!-- Carte peluche -->
+                    <template id="templateProduct">
+                        <article class="col-12 col-md-6 col-xl-4">
+                            <div class="card border-light shadow-sm mb-3">
+                                <a href="" class="stretched-link" id="productLink">
+                                    <img class="card-img-top remh-md-15" src="" alt="Modèle de peluche" id="productImage">
+                                </a>
+                                <div class="card-body text-center">
+                                    <h5 class="card-title" id="productName"></h5>
+                                    <p class="card-text fw-bold" id="productPrice"></p>
+                                </div>
+                            </div>
+                        </article>
+                    </template>
+                </div>
+            </section>
         </main>
         <!-- FOOTER -->
         <footer class="bg-dark">
