@@ -30,5 +30,16 @@ function fillPage(products){
 }
 
 function showProduct(product){
-    
+    // Récupérer le template
+    const templateElt = document.getElementById("templateProduct");
+    // Cloner le template
+    const cloneTempElt = document.importNode(templateElt.content, true);
+    // Remplir chaque clone du template
+    cloneTempElt.getElementById("productLink").href = "html/product.html?id=" + product._id;
+    cloneTempElt.getElementById("productImage").src = product.imageUrl;
+    cloneTempElt.getElementById("productImage").alt += " " + product.name;
+    cloneTempElt.getElementById("productName").textContent = product.name;
+    cloneTempElt.getElementById("productPrice").textContent = product.price/100 + ",00 €";
+    // Afficher les clones du template à l'endroit souhaité
+    document.getElementById("productsList").appendChild(cloneTempElt);
 }
