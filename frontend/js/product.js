@@ -33,7 +33,12 @@ function getProductData(productId){
 }
 
 function fillPage(product){
-
+    // Récupérer les données du produit
+    document.getElementById("productImage").src = product.imageUrl;
+    document.getElementById("productImage").alt += " " + product.name;
+    document.getElementById("productName").textContent = product.name;
+    document.getElementById("productDescription").textContent = product.description;
+    document.getElementById("productPrice").textContent = product.price/100 + ",00 €";
 }
 
 function addToShoppingCart(product){
