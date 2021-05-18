@@ -64,7 +64,20 @@ function showTotalCartAmount(){
 }
 
 function totalCartAmount(){
-
+    // Tableau des prix totaux
+    let totalCartPrice = [];
+    // Récupérer les prix dans le panier
+    for (let index = 0; index < getCart.length; index++) {
+        sumOfPricesOfProductsInCart = getCart[index].price/100;
+        // Mettre tous les prix dans le tableau
+        totalCartPrice.push(sumOfPricesOfProductsInCart)
+    }
+    // Additionner les prix du tableau
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    const totalAmount = totalCartPrice.reduce(reducer, 0);
+    // Envoyer le nouveau montant du panier dans le stockage du navigateur
+    localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
+    return totalAmount;
 }
 
 function formCheck(){
