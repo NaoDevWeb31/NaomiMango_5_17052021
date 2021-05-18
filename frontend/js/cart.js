@@ -60,7 +60,17 @@ function getCartProductData(){
 }
 
 function showTotalCartAmount(){
-
+    // Afficher le montant total du panier quand il n'est pas vide
+    if (getCart != null){
+        // Récupérer le template de la ligne de total du panier
+        const templateTotalElt = document.getElementById("totalCartRowTemplate");
+        // Cloner le template
+        const cloneTempTotalElt = document.importNode(templateTotalElt.content, true);
+        // Remplir pour le clone du template
+        cloneTempTotalElt.getElementById("totalCartPrice").textContent = totalCartAmount() + ",00€";
+        // Afficher le clone du template à l'endroit souhaité
+        document.getElementById("cartList").appendChild(cloneTempTotalElt);
+    }
 }
 
 function totalCartAmount(){
