@@ -67,7 +67,51 @@
                     </div>
                 </div>
             </section>
-
+            <section class="container my-5">
+                <div class="row" id="mainContent">
+                    <!-- IMAGE -->
+                    <div class="col-12 col-lg-6 mb-2 d-flex align-items-center">
+                        <img src="" alt="Modèle de peluche" class="img-fluid border-dark" id="productImage">
+                    </div>
+                    <!-- DESCRIPTION PRODUIT -->
+                    <div class="col-12 col-lg-6 d-flex flex-column justify-content-between">
+                        <h1 class="display-6" id="productName"></h1>
+                        <h2 class="h5 border-bottom pb-2 fw-normal" id="productDescription"></h2>
+                        <div class="mb-3">
+                            <img src="../img/star.png" alt="Note">
+                            <img src="../img/star.png" alt="Note">
+                            <img src="../img/star.png" alt="Note">
+                            <img src="../img/star.png" alt="Note">
+                            <img src="../img/star.png" alt="Note">
+                            - 48 Avis
+                        </div>
+                        <form action="">
+                            <div class="form-group mb-3">
+                                <label for="productOptions" >Couleur :</label>
+                                <select name="colors" id="productOptions" class="form-select" aria-label="Sélection de la couleur du produit" required>
+                                    <option value="">Choissisez la couleur de votre peluche</option>
+                                    <template id="optionTemplate">
+                                        <option value="color" id="productColor"></option>
+                                    </template>
+                                </select>
+                            </div>
+                        </form>
+                        <p class="h4" id="productPrice"></p>
+                        <p>En stock</p>
+                        <button class="btn btn-dark" id="addToCart"> Ajouter au panier</button>
+                    </div>
+                    <!-- ALERTE D'AJOUT AU PANIER -->
+                    <template id="alertTemplate">
+                        <div  class="col-12 mt-4" id="alertAddedToCart">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <h4 class="alert-heading">Le produit a bien été ajouté au panier !</h4>
+                                <p>Rendez-vous sur votre <a href="cart.html" class="alert-link">panier</a> ou continuez vos achats.</p>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span class="visually-hidden">Fermer</span></button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </section>
         </main>
         <!-- FOOTER -->
         <footer class="bg-dark">
