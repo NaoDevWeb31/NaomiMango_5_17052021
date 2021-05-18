@@ -74,7 +74,124 @@
                     </div>
                 </div>
             </section>
-
+            <!-- TABLEAU -->
+            <section class="container mx-auto my-3" id="cartTable">
+                <div class="row">
+                    <div class="col">
+                        <table class="table table-striped table-hover">
+                            <!-- INTITULÉS TABLEAU -->
+                            <thead class="table-primary">
+                                <tr class="text-center">
+                                    <th scope="col">Produit</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Prix unitaire</th>
+                                    <th scope="col">Quantité</th>
+                                    <th scope="col"><span class="visually-hidden">Supprimer le produit du panier</span></th>
+                                    <th scope="col">Prix total</th>
+                                </tr>
+                            </thead>
+                            <!-- ARTICLES TABLEAU -->
+                            <tbody id="cartList">
+                                <!-- LIGNE -->
+                                <template id="cartRowTemplate">
+                                    <tr class="text-center">
+                                        <td class="align-middle">
+                                            <img src="" alt="Modèle de peluche" class="img-fluid remh-sm-5" id="productImage">
+                                        </td>
+                                        <td class="align-middle">
+                                            <span class="fw-bold" id="productName"></span><br/>
+                                           <span id="productColor"></span>
+                                        </td>
+                                        <td class="align-middle" id="productPrice"></td>
+                                        <td class="align-middle">
+                                            <form action="">
+                                                <div class="form-group">
+                                                    <label for="productQuantity" class="visually-hidden">Quantité :</label>
+                                                    <select name="quantity" id="productQuantity" onchange="getProductQuantity()" class="form-select w-auto mx-auto" aria-label="Sélection de la quantité de produit" required>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <td class="align-middle">
+                                            <a class="link-dark" href="" aria-label="Suppression du produit" id="deleteProduct">
+                                                <span class="visually-hidden">Supprimer le produit</span>
+                                                <i class="fas fa-times fs-4"></i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle" id="productTotalPrice"></td>
+                                    </tr>
+                                </template>
+                                <!-- LIGNE TOTAL -->
+                                <template id="totalCartRowTemplate">
+                                    <tr class="bg-dark text-white" id="totalCartRow">
+                                        <th colspan="5" class="text-end pe-5">TOTAL</th>
+                                        <td class="text-center" id="totalCartPrice"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- ALERTE PANIER VIDE -->
+                <template id="alertTemplate">
+                    <div class="row" id="alertEmptyCart">
+                        <div  class="col-12 mt-4">
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                <p>Le panier est vide</p>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer l'alerte"><span class="visually-hidden">Fermer</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </section>
+            <!-- FORMULAIRE -->
+            <section class="container mx-auto bg-primary mb-5 rounded px-3">
+                <div class="row py-3">
+                    <div class="col">
+                        <h2 class="h3">Formulaire de commande</h2>
+                    </div>
+                </div>
+                <!-- FORMULAIRE DE COMMANDE -->
+                <form class="row g-3 pb-3">
+                    <div class="col-md-3">
+                        <label for="firstName" class="form-label">Prénom</label>
+                        <input type="text" class="form-control" id="firstName" aria-label="Saisie du prénom de l'utilisateur" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="lastName" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="lastName" aria-label="Saisie du nom de l'utilisateur" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Adresse e-mail</label>
+                        <input type="text" class="form-control" id="email" aria-label="Saisie de l'adresse e-mail de l'utilisateur" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="address" class="form-label">Adresse</label>
+                        <input type="text" class="form-control" id="address" aria-label="Saisie de l'adresse de l'utilisateur" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="zip" class="form-label">Code postal</label>
+                        <input type="text" class="form-control" id="zip" aria-label="Saisie du code postal de l'utilisateur" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="city" class="form-label">Ville</label>
+                        <input type="text" class="form-control" id="city" aria-label="Saisie de la ville de l'utilisateur" required>
+                    </div>
+                    <div class="col-12 d-flex justify-content-end">
+                        <button class="btn btn-dark" type="submit"><a href="">Commander</a></button>
+                    </div>
+                </form>
+            </section>
         </main>
         <!-- FOOTER -->
         <footer class="bg-dark">
