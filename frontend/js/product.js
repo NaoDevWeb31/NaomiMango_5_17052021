@@ -39,8 +39,23 @@ function fillPage(product){
     document.getElementById("productName").textContent = product.name;
     document.getElementById("productDescription").textContent = product.description;
     document.getElementById("productPrice").textContent = product.price/100 + ",00 €";
+    // Au clic du bouton
+    addToShoppingCart(product);
 }
 
 function addToShoppingCart(product){
+    document.getElementById("addToCart").addEventListener("click", function(){
+        // Récupérer le panier
+        let getCart = JSON.parse(localStorage.getItem("cart")); // Transformer cart (du JSON récupéré dans le stockage du navigateur) en objet JS
+        // Si la panier est vide
+        if (getCart === null){
+            // Créer un tableau
+            getCart = [];
+        };
+        // Ajouter le produit dans le tableau du panier
+        getCart.push(product);
+        // Modifier cart (re-transformé en JSON)
+        localStorage.setItem("cart", JSON.stringify(getCart));
+    })
 
 }
