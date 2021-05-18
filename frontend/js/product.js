@@ -56,6 +56,16 @@ function addToShoppingCart(product){
         getCart.push(product);
         // Modifier cart (re-transformé en JSON)
         localStorage.setItem("cart", JSON.stringify(getCart));
+        // Afficher l'alerte pour confirmer l'ajout
+        alertAddedToCart();
     })
+}
 
+function alertAddedToCart(){
+    // Récupérer le template de l'alerte
+    const templateAltElt = document.getElementById("alertTemplate");
+    // Cloner le template de l'alerte
+    const cloneTempAltElt = document.importNode(templateAltElt.content, true);
+    // Afficher l'alerte à l'endroit souhaité
+    document.getElementById("mainContent").appendChild(cloneTempAltElt);
 }
