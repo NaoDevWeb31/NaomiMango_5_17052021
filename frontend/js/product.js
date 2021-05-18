@@ -58,6 +58,8 @@ function addToShoppingCart(product){
         localStorage.setItem("cart", JSON.stringify(getCart));
         // Afficher l'alerte pour confirmer l'ajout
         alertAddedToCart();
+        // Fermer l'alerte
+        dismissAlert();
     })
 }
 
@@ -68,4 +70,17 @@ function alertAddedToCart(){
     const cloneTempAltElt = document.importNode(templateAltElt.content, true);
     // Afficher l'alerte à l'endroit souhaité
     document.getElementById("mainContent").appendChild(cloneTempAltElt);
+}
+
+function dismissAlert(){
+    // Récupérer le bouton de fermeture
+    let btnClose = document.querySelector(".btn-close");
+    // Au clic du bouton
+    btnClose.addEventListener("click", function(event){
+        event.preventDefault();
+        // Récupérer le conteneur de l'alerte
+        let alert = document.getElementById("alertAddedToCart");
+        // Supprimer le conteneur de l'alerte
+        alert.remove();
+    });
 }
