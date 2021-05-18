@@ -12,7 +12,8 @@ async function main(){
 }
 
 function getProductId(){
-
+    // Récupérer l'id du produit
+    return new URLSearchParams(document.location.search).get("id");
 }
 
 function getProductData(productId){
