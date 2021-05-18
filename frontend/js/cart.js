@@ -20,7 +20,25 @@ function fillPage(){
 }
 
 function getCartList(){
-
+    // Si la panier est vide
+    if (getCart != null){
+        for (let i = getCart.length - 1; i >= 0; i--) {
+            // Appel de l'API via fetch pour récupérer les données du stockage
+            return fetch(urlApi + getCart[i]._id)
+                .then(function(response){
+                    // Récupérer la réponse en JSON
+                    return response.json();
+                })
+                .then(function(cartProductData) {
+                    // Récupérer les données stockées dans le panier (stockage navigateur)
+                    return cartProductData;
+                })
+                .catch(function(error){
+                    // Une erreur s'est produit
+                    alert("Le panier est indisponible pour le moment, veuillez nous excusez pour la gêne occasionnée");
+                })
+        }
+    }
 }
 
 function getCartProductData(){
