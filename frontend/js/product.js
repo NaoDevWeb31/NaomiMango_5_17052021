@@ -17,7 +17,19 @@ function getProductId(){
 }
 
 function getProductData(productId){
-
+    // Appel de l'API via fetch pour recevoir les données du produit
+    return fetch(urlApi + productId)
+        .then(function(response){
+            // Récupérer la réponse en JSON
+            return response.json();
+        })
+        .then(function(productData) {
+            return productData;
+        })
+        .catch(function(error){
+            // Une erreur s'est produit
+            alert("Le produit est indisponible pour le moment, veuillez nous excusez pour la gêne occasionnée");
+    });
 }
 
 function fillPage(product){
