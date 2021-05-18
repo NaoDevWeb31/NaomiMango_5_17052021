@@ -42,7 +42,21 @@ function getCartList(){
 }
 
 function getCartProductData(){
-
+    // Pour tous les produits du panier
+    for (let cartProduct of getCart) {
+        // Récupérer le template de la ligne du panier
+        const templateElt = document.getElementById("cartRowTemplate");
+        // Cloner le template
+        const cloneTempElt = document.importNode(templateElt.content, true);
+        // Remplir pour chaque clone du template
+        cloneTempElt.getElementById("productImage").src = cartProduct.imageUrl;
+        cloneTempElt.getElementById("productImage").alt += " " + cartProduct.name;
+        cloneTempElt.getElementById("productName").textContent = cartProduct.name;
+        cloneTempElt.getElementById("productPrice").textContent = cartProduct.price/100 + ",00 €";
+        cloneTempElt.getElementById("productTotalPrice").textContent = productTotalPrice(cartProduct);
+        // Afficher le clone du template à l'endroit souhaité
+        document.getElementById("cartList").appendChild(cloneTempElt);
+    }
 }
 
 function showTotalCartAmount(){
