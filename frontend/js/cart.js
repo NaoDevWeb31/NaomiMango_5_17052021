@@ -15,7 +15,8 @@ async function main(){
 }
 
 function fillPage(){
-
+    getCartList();
+    showTotalCartAmount();
 }
 
 function getCartList(){
