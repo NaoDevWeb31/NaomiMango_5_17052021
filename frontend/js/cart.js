@@ -40,7 +40,35 @@ function getCartList(){
                     alert("Le panier est indisponible pour le moment, veuillez nous excusez pour la gêne occasionnée");
                 })
         }
+    // Si le panier est vide
+    } else {
+        // Afficher l'alerte
+        alertEmptyCart();
+        // Fermer l'alerte
+        dismissAlert();
     }
+}
+
+function alertEmptyCart(){
+    // Récupérer le template de l'alerte
+    const templateAltElt = document.getElementById("alertTemplate");
+    // Cloner le template de l'alerte
+    const cloneTempAltElt = document.importNode(templateAltElt.content, true);
+    // Afficher l'alerte à l'endroit souhaité
+    document.getElementById("cartTable").appendChild(cloneTempAltElt);
+}
+
+function dismissAlert(){
+    // Récupérer le bouton de fermeture
+    let btnClose = document.querySelector(".btn-close");
+    // Au clic du bouton
+    btnClose.addEventListener("click", function(event){
+        event.preventDefault();
+        // Récupérer le conteneur de l'alerte
+        let alert = document.getElementById("alertEmptyCart");
+        // Supprimer le conteneur de l'alerte
+        alert.remove();
+    });
 }
 
 function getCartLength(){
