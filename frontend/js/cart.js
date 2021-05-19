@@ -254,8 +254,6 @@ function getOrder(){
     localStorage.setItem("product", JSON.stringify(products));
 }
 
-function sendOrder(){
-}
 
 function sendOrder(){
     // Regrouper infos client + produits et montant total
@@ -280,4 +278,13 @@ function sendOrder(){
             // Une erreur s'est produit
             alert("Erreur lors de l'envoi de la commande");
         });
+}
+
+function order(){
+    // Récupérer le bouton "commander"
+    document.getElementById("formSubmit").addEventListener("submit", function(event){
+        event.preventDefault();
+        // Au clic du bouton,récupérer et envoyer les infos du panier et le formulaire
+        sendOrder();
+    })
 }
