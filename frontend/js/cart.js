@@ -90,6 +90,32 @@ function totalCartAmount(){
     return totalAmount;
 }
 
+function deleteCartProduct(){
+    // Récupérer tous les icônes de suppression
+    let deleteBtn = document.querySelectorAll("#deleteProduct");
+    // console.log(deleteBtn);
+
+    // En cliquant sur chaque icône de suppression
+    for (let index = 0; index < deleteBtn.length; index++) {
+        deleteBtn[index].addEventListener("click", function(event){
+            event.preventDefault();
+            // console.log(event)
+
+            // Supprimer l'id du produit à supprimer du panier
+            let cartProductIdToDelete = getCart[index]._id;
+            // console.log(cartProductIdToDelete);
+
+            // Filtrer les produits à garder dans le panier
+            getCart = getCart.filter(cartProduct => cartProduct._id != cartProductIdToDelete);
+            // console.log(getCart)
+
+            // Renvoyé "cart" modifié(re-transformé en JSON) dans le stockage du navigateur
+            localStorage.setItem("cart", JSON.stringify(getCart));
+            document.location.reload();
+        })
+    }
+}
+
 function formCheck(){
 }
 
