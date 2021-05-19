@@ -53,7 +53,7 @@ function getCartProductData(){
         cloneTempElt.getElementById("productImage").alt += " " + cartProduct.name;
         cloneTempElt.getElementById("productName").textContent = cartProduct.name;
         cloneTempElt.getElementById("productPrice").textContent = cartProduct.price/100 + ",00 €";
-        cloneTempElt.getElementById("productTotalPrice").textContent = productTotalPrice(cartProduct);
+        cloneTempElt.getElementById("productTotalPrice").textContent = "Fonction à rajouter";
         // Afficher le clone du template à l'endroit souhaité
         document.getElementById("cartList").appendChild(cloneTempElt);
     }
@@ -69,7 +69,7 @@ function showTotalCartAmount(){
         // Remplir pour le clone du template
         cloneTempTotalElt.getElementById("totalCartPrice").textContent = totalCartAmount() + ",00€";
         // Afficher le clone du template à l'endroit souhaité
-        document.getElementById("cartList").appendChild(cloneTempTotalElt);
+        document.getElementById("cartFoot").appendChild(cloneTempTotalElt);
     }
 }
 
@@ -91,9 +91,7 @@ function totalCartAmount(){
 }
 
 function formCheck(){
-
 }
 
 function sendOrder(){
-
 }
