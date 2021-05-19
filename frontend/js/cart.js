@@ -100,6 +100,23 @@ function getCartProductData(){
     }
 }
 
+function productTotalPrice(cartProduct){
+    // Prix unitaire par produit
+    const pricePerProduct = cartProduct.price/100;
+    // Prix total par produit
+    let totalPricePerProduct = pricePerProduct;
+    // Si la quantité de produit est supérieur à 1
+    //     totalPricePerProduct *= getProductQuantity();
+    // Au changement de la valeur de la quantité de produit
+    return totalPricePerProduct + ",00 €";
+}
+
+function getProductQuantity(){
+    // Récupérer la quantité d'un produit
+    let quantity = document.getElementById("productQuantity").value;
+    // return quantity
+}
+
 function showTotalCartAmount(){
     // Afficher le montant total du panier quand il n'est pas vide
     if (getCart != null){
