@@ -183,7 +183,24 @@ const emailRegEx = (value) => {
     return /^[a-zA-Z0-9&^_¨-]+(?:.[a-zA-Z0-9&^_¨-]+)@[a-zA-Z]+[.]([a-z]{2,3})$/.test(value);
 }
 
-function formCheck(){
+function formCheck(formField, regEx){
+    // À la saisie du champ sélectionné
+    formField.addEventListener("input", function(event){
+        // Si l'expression régulière sélectionnée est correcte
+        if (regEx(event.target.value)){
+            event.target.classList.add("is-valid");
+            event.target.classList.replace("is-invalid","is-valid");
+        // Sinon
+        } else if (regEx(event.target.value) == false ){
+            event.target.classList.replace("is-valid", "is-invalid");
+        }
+    });
+    // Après une première saisie, quand le champ est en focus
+    formField.addEventListener("focus", function(event){
+        if (event.target.value === "") {
+            event.target.classList.remove("is-valid", "is-invalid");
+        }
+    });
 }
 
 function sendOrder(){
