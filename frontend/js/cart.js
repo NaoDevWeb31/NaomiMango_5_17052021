@@ -203,5 +203,21 @@ function formCheck(formField, regEx){
     });
 }
 
+function validateForm(){
+    // Valider les champs de noms
+    for (let index = 0; index < formFields.length - 4; index++) {
+        const element = formFields[index];
+        formCheck(element, nameRegEx)
+    };
+    // Valider le champ d'adresse
+    formCheck(addressId, adressRegEx);
+    // Valider le champ de code postal
+    formCheck(zipId, zipRegEx);
+    // Valider le champ de ville
+    formCheck(cityId, nameRegEx);
+    // Valider le champ d'email
+    formCheck(emailId, emailRegEx);
+}
+
 function sendOrder(){
 }
