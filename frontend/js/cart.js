@@ -166,6 +166,22 @@ const emailId = document.getElementById("email");
 // Tableau de champs
 const formFields = [firstNameId, lastNameId, addressId, zipId, cityId, emailId];
 
+// Validation pour noms et ville
+const nameRegEx = (value) => {
+    return /^[A-Za-zéÉèÈêÊàÀôëç'-]{3,20}$/.test(value);
+}
+// Validation pour adresse
+const adressRegEx = (value) => {
+    return /^(?:[0-9]{2,3})+(?: [a-zA-Z]{3,15})+(?:[ a-zA-ZéÉèÈêÊàÀôëçù^_¨'-]{2,50})$/.test(value);
+}
+// Validation pour code postal
+const zipRegEx = (value) => {
+    return /^[0-9]{5}$/.test(value);
+}
+// Validation pour email
+const emailRegEx = (value) => {
+    return /^[a-zA-Z0-9&^_¨-]+(?:.[a-zA-Z0-9&^_¨-]+)@[a-zA-Z]+[.]([a-z]{2,3})$/.test(value);
+}
 
 function formCheck(){
 }
