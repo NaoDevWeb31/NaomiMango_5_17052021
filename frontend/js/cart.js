@@ -254,7 +254,6 @@ function getOrder(){
     localStorage.setItem("product", JSON.stringify(products));
 }
 
-
 function sendOrder(){
     // Regrouper infos client + produits et montant total
     const customerOrder = {contact, products};
