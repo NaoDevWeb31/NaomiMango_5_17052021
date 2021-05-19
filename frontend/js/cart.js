@@ -155,6 +155,18 @@ function deleteCartProduct(){
     }
 }
 
+//                                      FORMULAIRE
+const firstNameId = document.getElementById("firstName");
+const lastNameId = document.getElementById("lastName");
+const addressId = document.getElementById("address");
+const zipId = document.getElementById("zip");
+const cityId = document.getElementById("city");
+const emailId = document.getElementById("email");
+
+// Tableau de champs
+const formFields = [firstNameId, lastNameId, addressId, zipId, cityId, emailId];
+
+
 function formCheck(){
 }
 
