@@ -256,3 +256,28 @@ function getOrder(){
 
 function sendOrder(){
 }
+
+function sendOrder(){
+    // Regrouper infos client + produits et montant total
+    const customerOrder = {contact, products};
+    // Faire la requête POST
+    fetch(urlApi+"order",{
+        method: "POST",
+        headers: {"Accept" : "application/json", "Content-Type" : "application.json"},
+        body: JSON.stringify(customerOrder)
+    })
+        .then(function(response){
+            // Récupérer la réponse en JSON
+            return response.json();
+        })
+        .then(function(customerOrder) {
+            // Stocker l'objet qui regroupe les infos client + produits et montant total dans le navigateur
+            localStorage.setItem("customerOrder", JSON.stringify(customerOrder));
+            localStorage.setItem("orderId", customerOrder.orderId)
+            window.location.href = window.location.origin + "/orderConfirmation.html?orderId=" + customerOrder.orderId;
+        })
+        .catch(function(error){
+            // Une erreur s'est produit
+            alert("Erreur lors de l'envoi de la commande");
+        });
+}
