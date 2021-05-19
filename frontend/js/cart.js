@@ -19,6 +19,8 @@ function fillPage(){
     getCartLength()
     showTotalCartAmount();
     deleteCartProduct();
+    validateForm();
+    getOrder();
 }
 
 function getCartList(){
@@ -217,6 +219,39 @@ function validateForm(){
     formCheck(cityId, nameRegEx);
     // Valider le champ d'email
     formCheck(emailId, emailRegEx);
+}
+
+function getOrder(){
+    // Récupérer tous les inputs du formulaire
+    let inputs = document.querySelectorAll("#formOrder input");
+    for (let index = 0; index < inputs.length; index++){
+        const element = inputs[index];
+        // Pour chaque input, écouter une fois la saisie achevée
+        element.addEventListener("change", function(){
+            // Si grâce à formCheck(), l'input a une bordure verte (validé)
+            if (element.className === "form-control is-valid"){
+                // console.log("TRUE");
+                // Créer l'objet "contact" à envoyer
+                let contact = {
+                    "firstName" : firstNameId.value,
+                    "lastName" : lastNameId.value,
+                    "address" : addressId.value + " " + zipId.value,
+                    "city" : cityId.value,
+                    "email" : emailId.value
+                };
+                // Stocker "contact" dans le navigateur
+                localStorage.setItem("contact", JSON.stringify(contact));
+            }
+        })
+    }
+    // Créer le tableau "products" à envoyer
+    let products = [];
+    // Récupérer le montant du panier
+    let getTotalAmount = JSON.parse(localStorage.getItem("totalAmount"));
+    // Ajouter le panier et son montant total dans le tableau products
+    products.push(getCart, getTotalAmount);
+    // Modifier le tableau products (re-transformé en JSON)
+    localStorage.setItem("product", JSON.stringify(products));
 }
 
 function sendOrder(){
