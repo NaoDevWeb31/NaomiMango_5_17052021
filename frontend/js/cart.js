@@ -16,7 +16,9 @@ async function main(){
 
 function fillPage(){
     getCartList();
+    getCartLength()
     showTotalCartAmount();
+    deleteCartProduct();
 }
 
 function getCartList(){
@@ -38,6 +40,15 @@ function getCartList(){
                     alert("Le panier est indisponible pour le moment, veuillez nous excusez pour la gêne occasionnée");
                 })
         }
+    }
+}
+
+function getCartLength(){
+    // Récupérer l'emplacement du nombre de produit du panier
+    let NumberOfProductsInCart = document.getElementById("NumberOfProductsInCart");
+    if (getCart.length > 0){
+        // Nombre de produit dans le panier
+        NumberOfProductsInCart.textContent = getCart.length;
     }
 }
 

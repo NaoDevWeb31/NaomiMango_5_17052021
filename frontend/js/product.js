@@ -43,6 +43,8 @@ function fillPage(product){
     getColorsOptions(product);
     // Au clic du bouton
     addToShoppingCart(product);
+    // Afficher le nombre de produits du panier dans le menu de navigation
+    getCartLength();
 }
 
 function getColorsOptions(product){
@@ -99,4 +101,15 @@ function dismissAlert(){
         // Supprimer le conteneur de l'alerte
         alert.remove();
     });
+}
+
+function getCartLength(){
+    // Récupérer le panier stocké dans le navigateur
+    let getCart = JSON.parse(localStorage.getItem("cart"));
+    // Récupérer l'emplacement du nombre de produit du panier
+    let NumberOfProductsInCart = document.getElementById("NumberOfProductsInCart");
+    if (getCart.length > 0){
+        // Nombre de produit dans le panier
+        NumberOfProductsInCart.textContent = getCart.length;
+    }
 }

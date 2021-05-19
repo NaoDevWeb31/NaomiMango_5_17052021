@@ -30,6 +30,8 @@ function fillPage(products){
     for (const product of products) {
         showProduct(product);
     }
+    // Afficher dans le menu de navigation le nombre de produit dans le panier
+    getCartLength()
 }
 
 function showProduct(product){
@@ -45,4 +47,15 @@ function showProduct(product){
     cloneTempElt.getElementById("productPrice").textContent = product.price/100 + ",00 €";
     // Afficher les clones du template à l'endroit souhaité
     document.getElementById("productsList").appendChild(cloneTempElt);
+}
+
+function getCartLength(){
+    // Récupérer le panier stocké dans le navigateur
+    let getCart = JSON.parse(localStorage.getItem("cart"));
+    // Récupérer l'emplacement du nombre de produit du panier
+    let NumberOfProductsInCart = document.getElementById("NumberOfProductsInCart");
+    if (getCart.length > 0){
+        // Nombre de produit dans le panier
+        NumberOfProductsInCart.textContent = getCart.length;
+    }
 }
