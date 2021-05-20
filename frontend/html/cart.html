@@ -8,8 +8,6 @@
         <meta name="description" content="">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="../css/style.css"/>
-        <!-- Icônes CSS -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <!-- Titre de l'onglet -->
         <title>Panier - Orinoco</title>
         <!-- Favicon -->
@@ -45,7 +43,7 @@
                             <!-- LISTE DU MENU DE NAVIGATION -->
                             <ul class="navbar-nav">
                                 <li class="nav-item active">
-                                    <a class="nav-link dark-link" href="cart.html"><i class="fas fa-shopping-cart"><span class="fs-5" id="NumberOfProductsInCart"></span></i> Panier</a>
+                                    <a class="nav-link link-dark" href="cart.html"><i class="fas fa-shopping-cart"><span class="fs-5" id="NumberOfProductsInCart"></span></i> Panier</a>
                                 </li>
                             </ul>
                         </div>
@@ -94,9 +92,11 @@
                             <tbody id="cartList">
                                 <!-- LIGNE -->
                                 <template id="cartRowTemplate">
-                                    <tr class="text-center">
+                                    <tr class="text-center" id="cartListRow">
                                         <td class="align-middle d-none d-sm-table-cell">
-                                            <img src="" alt="Modèle de peluche" class="img-fluid remh-sm-5" id="productImage">
+                                            <a href="" id="productLink">
+                                                <img src="" alt="Modèle de peluche" class="img-fluid remh-sm-5" id="productImage">
+                                            </a>
                                         </td>
                                         <td class="align-middle">
                                             <span class="fw-bold" id="productName"></span><br/>
@@ -107,7 +107,7 @@
                                             <form action="">
                                                 <div class="form-group">
                                                     <label for="productQuantity" class="visually-hidden">Quantité :</label>
-                                                    <select name="quantity" id="productQuantity" onchange="getProductQuantity()" class="form-select w-auto mx-auto" aria-label="Sélection de la quantité de produit" required>
+                                                    <select name="quantity" id="productQuantity" class="form-select w-auto mx-auto" aria-label="Sélection de la quantité de produit" required>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
