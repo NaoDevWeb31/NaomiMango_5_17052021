@@ -1485,6 +1485,10 @@ button:not(:disabled),
   }
 }
 
+.flex-column {
+  flex-direction: column;
+}
+
 .justify-content-start {
   justify-content: flex-start !important;
 }
@@ -2015,6 +2019,9 @@ button:not(:disabled),
 }
 .fa-shopping-cart:before {
   content: "\f07a";
+}
+.fa-times:before {
+  content: "\f00d";
 }
 @font-face {
   font-family: "Font Awesome 5 Free";
