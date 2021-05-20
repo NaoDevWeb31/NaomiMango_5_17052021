@@ -74,7 +74,7 @@
             </section>
             <!-- TABLEAU -->
             <section class="container mx-auto my-3" id="cartTable">
-                <div class="row">
+                <div class="row" id="cartRowContent">
                     <div class="col">
                         <table class="table table-striped table-hover mb-0">
                             <!-- INTITULÉS TABLEAU -->
@@ -155,6 +155,13 @@
                         </div>
                     </div>
                 </template>
+                <div class="row" id="emptyCartRow">
+                    <div class="col d-flex justify-content-end">
+                        <button class="btn btn-dark mt-3" id="emptyCart">
+                            Vider le panier
+                        </button>
+                    </div>
+                </div>
             </section>
             <!-- FORMULAIRE -->
             <section class="container mx-auto bg-primary mb-5 rounded px-3">
@@ -189,8 +196,8 @@
                         <label for="city" class="form-label">Ville</label>
                         <input type="text" class="form-control" id="city" aria-label="Saisie de la ville de l'utilisateur" required>
                     </div>
-                    <div class="col-12 d-flex justify-content-end">
-                        <button class="btn btn-dark" type="submit" id="formSubmit"><a href="">Commander</a></button>
+                    <div class="col-12 d-flex justify-content-end mt-2">
+                        <button class="btn btn-dark" type="submit" id="formSubmit">Commander</button>
                     </div>
                 </form>
             </section>
