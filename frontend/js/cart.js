@@ -16,11 +16,15 @@ async function main(){
 
 function fillPage(){
     getCartList();
-    getCartLength()
+    getCartLength();
+    getProductQuantity();
+    productTotalPrice();
     showTotalCartAmount();
     deleteCartProduct();
+    emptyCart();
     validateForm();
     getOrder();
+    order();
 }
 
 function getCartList(){
@@ -44,6 +48,12 @@ function getCartList(){
         }
     // Si le panier est vide
     } else {
+
+        let cartTable = document.getElementById("cartTable");
+        let emptyCartRow = document.getElementById("emptyCartRow")
+        let cartRowContent = document.getElementById("cartRowContent");
+        cartTable.removeChild(cartRowContent);
+        cartTable.removeChild(emptyCartRow);
         // Afficher l'alerte
         alertEmptyCart();
         // Fermer l'alerte
@@ -76,7 +86,7 @@ function dismissAlert(){
 function getCartLength(){
     // Récupérer l'emplacement du nombre de produit du panier
     let NumberOfProductsInCart = document.getElementById("NumberOfProductsInCart");
-    if (getCart.length > 0){
+    if (getCart){
         // Nombre de produit dans le panier
         NumberOfProductsInCart.textContent = getCart.length;
     }
@@ -92,30 +102,59 @@ function getCartProductData(){
         // Remplir pour chaque clone du template
         cloneTempElt.getElementById("productImage").src = cartProduct.imageUrl;
         cloneTempElt.getElementById("productImage").alt += " " + cartProduct.name;
+        cloneTempElt.getElementById("productLink").href = "product.html?id=" + cartProduct._id;
         cloneTempElt.getElementById("productName").textContent = cartProduct.name;
         cloneTempElt.getElementById("productPrice").textContent = cartProduct.price/100 + ",00 €";
-        cloneTempElt.getElementById("productTotalPrice").textContent = "Fonction à rajouter";
+        cloneTempElt.getElementById("productTotalPrice").textContent = cartProduct.price/100 + ",00 €";
         // Afficher le clone du template à l'endroit souhaité
         document.getElementById("cartList").appendChild(cloneTempElt);
     }
 }
 
-function productTotalPrice(cartProduct){
-    // Prix unitaire par produit
-    const pricePerProduct = cartProduct.price/100;
-    // Prix total par produit
-    let totalPricePerProduct = pricePerProduct;
-    // Si la quantité de produit est supérieur à 1
-    //     totalPricePerProduct *= getProductQuantity();
-    // Au changement de la valeur de la quantité de produit
-    return totalPricePerProduct + ",00 €";
+const cartBody = document.getElementById("cartList");
+const cartRows = cartBody.getElementsByTagName("tr");
+
+//                                     PAS ENCORE BON
+
+const getProductQuantity = () => {
+    // Pour chaque ligne du panier
+    for (let r = 0; r < cartRows.length; r++) {
+        const element = cartRows[r];
+        // Récupérer la quantité du produit
+        let quantity = element.querySelector("#productQuantity");
+        // Au changement de la quantité
+        quantity.addEventListener("change", function(event){
+            // Récupérer la quantité
+            let productQuantity = event.target.value;
+            return productQuantity
+        })
+    }
 }
 
-function getProductQuantity(){
-    // Récupérer la quantité d'un produit
-    let quantity = document.getElementById("productQuantity").value;
-    // return quantity
+const productTotalPrice = () => {
+    // Pour tous les produits du panier
+    for (let cartProduct of getCart) {
+        // Prix unitaire par produit
+        const pricePerProduct = cartProduct.price/100;
+        // Pour chaque ligne du panier
+        for (let r = 0; r < cartRows.length; r++){
+            const element = cartRows[r];
+            // Récupérer la quantité du produit
+            let quantity = element.querySelector("#productQuantity");
+            // Au changement de la quantité
+            quantity.addEventListener("change", function(event){
+                // Récupérer la quantité
+                let productQuantity = event.target.value;
+                // Calcul du sous-total
+                totalPricePerProduct = pricePerProduct * productQuantity;
+                // Affichage du sous-total
+                element.querySelector("#productTotalPrice").textContent = totalPricePerProduct + ",00 €";
+            })
+        }
+    }
 }
+
+//                                     PAS ENCORE BON - FIN
 
 function showTotalCartAmount(){
     // Afficher le montant total du panier quand il n'est pas vide
@@ -151,27 +190,28 @@ function totalCartAmount(){
 function deleteCartProduct(){
     // Récupérer tous les icônes de suppression
     let deleteBtn = document.querySelectorAll("#deleteProduct");
-    // console.log(deleteBtn);
-
     // En cliquant sur chaque icône de suppression
     for (let index = 0; index < deleteBtn.length; index++) {
         deleteBtn[index].addEventListener("click", function(event){
             event.preventDefault();
-            // console.log(event)
-
             // Supprimer l'id du produit à supprimer du panier
             let cartProductIdToDelete = getCart[index]._id;
-            // console.log(cartProductIdToDelete);
-
             // Filtrer les produits à garder dans le panier
             getCart = getCart.filter(cartProduct => cartProduct._id != cartProductIdToDelete);
-            // console.log(getCart)
-
             // Renvoyé "cart" modifié(re-transformé en JSON) dans le stockage du navigateur
             localStorage.setItem("cart", JSON.stringify(getCart));
             document.location.reload();
         })
     }
+}
+
+function emptyCart(){
+    let btnEmptyCart = document.getElementById("emptyCart");
+    btnEmptyCart.addEventListener("click", function(event){
+        event.preventDefault();
+        localStorage.removeItem("cart");
+        document.location.reload();
+    })
 }
 
 //                                      FORMULAIRE
@@ -199,7 +239,7 @@ const zipRegEx = (value) => {
 }
 // Validation pour email
 const emailRegEx = (value) => {
-    return /^[a-zA-Z0-9&^_¨-]+(?:.[a-zA-Z0-9&^_¨-]+)@[a-zA-Z]+[.]([a-z]{2,3})$/.test(value);
+    return /^[a-zA-Z0-9&^_¨-]+(?:.[a-zA-Z0-9&^_¨-]+)@[a-zA-Z]+[.](?:[a-z]{2,3})$/.test(value);
 }
 
 function formCheck(formField, regEx){
@@ -247,7 +287,6 @@ function getOrder(){
         element.addEventListener("change", function(){
             // Si grâce à formCheck(), l'input a une bordure verte (validé)
             if (element.className === "form-control is-valid"){
-                // console.log("TRUE");
                 // Créer l'objet "contact" à envoyer
                 let contact = {
                     "firstName" : firstNameId.value,
@@ -266,39 +305,48 @@ function getOrder(){
     // Récupérer le montant du panier
     let getTotalAmount = JSON.parse(localStorage.getItem("totalAmount"));
     // Ajouter le panier et son montant total dans le tableau products
-    products.push(getCart, getTotalAmount);
+    for (let p = 0; p < getCart.length; p++) {
+        const element = getCart[p];
+        products.push(element._id)
+    }
+    products.push(getTotalAmount);
     // Modifier le tableau products (re-transformé en JSON)
     localStorage.setItem("product", JSON.stringify(products));
 }
 
+// element.className === "form-control is-valid"
 function sendOrder(){
+    const contact = localStorage.getItem("contact");
+    const products = localStorage.getItem("product")
     // Regrouper infos client + produits et montant total
     const customerOrder = {contact, products};
-    // Faire la requête POST
-    fetch(urlApi+"order",{
-        method: "POST",
-        headers: {"Accept" : "application/json", "Content-Type" : "application.json"},
-        body: JSON.stringify(customerOrder)
-    })
-        .then(function(response){
-            // Récupérer la réponse en JSON
-            return response.json();
+    if (validateForm()){
+        // Faire la requête POST
+        fetch(urlApi+"order",{
+            method: "POST",
+            headers: {"Accept" : "application/json", "Content-Type" : "application.json"},
+            body: JSON.stringify(customerOrder)
         })
-        .then(function(customerOrder) {
-            // Stocker l'objet qui regroupe les infos client + produits et montant total dans le navigateur
-            localStorage.setItem("customerOrder", JSON.stringify(customerOrder));
-            localStorage.setItem("orderId", customerOrder.orderId)
-            window.location.href = window.location.origin + "/orderConfirmation.html?orderId=" + customerOrder.orderId;
-        })
-        .catch(function(error){
-            // Une erreur s'est produit
-            alert("Erreur lors de l'envoi de la commande");
-        });
+            .then(function(response){
+                // Récupérer la réponse en JSON
+                return response.json();
+            })
+            .then(function(customerOrder) {
+                // Stocker l'objet qui regroupe les infos client + produits et montant total dans le navigateur
+                localStorage.setItem("customerOrder", JSON.stringify(customerOrder));
+                localStorage.setItem("orderId", customerOrder.orderId)
+                window.location.href = "orderConfirmation.html?orderId=" + customerOrder.orderId;
+            })
+            .catch(function(error){
+                // Une erreur s'est produit
+                alert("Erreur lors de l'envoi de la commande");
+            });
+    }
 }
 
 function order(){
     // Récupérer le bouton "commander"
-    document.getElementById("formSubmit").addEventListener("submit", function(event){
+    document.getElementById("formSubmit").addEventListener("click", function(event){
         event.preventDefault();
         // Au clic du bouton,récupérer et envoyer les infos du panier et le formulaire
         sendOrder();

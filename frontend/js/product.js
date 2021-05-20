@@ -41,6 +41,7 @@ function fillPage(product){
     document.getElementById("productPrice").textContent = product.price/100 + ",00 €";
     // Sélection d'options
     getColorsOptions(product);
+    selectColor()
     // Au clic du bouton
     addToShoppingCart(product);
     // Afficher le nombre de produits du panier dans le menu de navigation
@@ -59,7 +60,29 @@ function getColorsOptions(product){
         // Afficher les clones du template à l'endroit souhaité
         document.getElementById("productOptions").appendChild(cloneTempElt);
     };
+    // Pour chaque couleur de la liste
+    let colors = document.querySelectorAll("option");
+    for (let o = 0; o < colors.length; o++) {
+        const color = colors[o];
+        // Donner un attribut "valeur = texte du champ"
+        color.setAttribute("value",color.textContent)
+    }
 }
+
+//                                     PAS ENCORE BON
+function selectColor(){
+    // Récupérer le champ de sélection de couleur
+    let colorOptions = document.getElementById("productOptions");
+    // Au changement de l'option
+    colorOptions.addEventListener("change", function(event){
+        // Récupérer la color
+        let colorOption = event.target.value;
+        localStorage.setItem("colorOption", JSON.stringify(colorOption))
+        console.log(colorOption)
+    })
+}
+//                                     PAS ENCORE BON - FIN
+
 
 function addToShoppingCart(product){
     document.getElementById("addToCart").addEventListener("click", function(){
@@ -108,7 +131,7 @@ function getCartLength(){
     let getCart = JSON.parse(localStorage.getItem("cart"));
     // Récupérer l'emplacement du nombre de produit du panier
     let NumberOfProductsInCart = document.getElementById("NumberOfProductsInCart");
-    if (getCart.length > 0){
+    if (getCart){
         // Nombre de produit dans le panier
         NumberOfProductsInCart.textContent = getCart.length;
     }

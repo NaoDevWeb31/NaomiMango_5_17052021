@@ -54,7 +54,7 @@ function getCartLength(){
     let getCart = JSON.parse(localStorage.getItem("cart"));
     // Récupérer l'emplacement du nombre de produit du panier
     let NumberOfProductsInCart = document.getElementById("NumberOfProductsInCart");
-    if (getCart.length > 0){
+    if (getCart){
         // Nombre de produit dans le panier
         NumberOfProductsInCart.textContent = getCart.length;
     }
