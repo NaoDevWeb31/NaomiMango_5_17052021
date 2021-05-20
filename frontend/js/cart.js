@@ -48,7 +48,6 @@ function getCartList(){
         }
     // Si le panier est vide
     } else {
-
         let cartTable = document.getElementById("cartTable");
         let emptyCartRow = document.getElementById("emptyCartRow")
         let cartRowContent = document.getElementById("cartRowContent");
