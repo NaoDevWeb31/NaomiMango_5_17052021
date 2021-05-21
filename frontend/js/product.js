@@ -24,7 +24,8 @@ function getProductData(productId){
             return response.json();
         })
         .then(function(productData) {
-            return productData;
+            let teddy = new Teddy(productData);
+            return teddy;
         })
         .catch(function(error){
             // Une erreur s'est produit
@@ -32,41 +33,33 @@ function getProductData(productId){
     });
 }
 
-function fillPage(product){
+function fillPage(teddy){
     // Récupérer les données du produit
-    document.getElementById("productImage").src = product.imageUrl;
-    document.getElementById("productImage").alt += " " + product.name;
-    document.getElementById("productName").textContent = product.name;
-    document.getElementById("productDescription").textContent = product.description;
-    document.getElementById("productPrice").textContent = product.price/100 + ",00 €";
+    document.getElementById("productImage").src = teddy.imageUrl;
+    document.getElementById("productImage").alt += " " + teddy.name;
+    document.getElementById("productName").textContent = teddy.name;
+    document.getElementById("productDescription").textContent = teddy.description;
+    document.getElementById("productPrice").textContent = teddy.price/100 + ",00 €";
     // Sélection d'options
-    getColorsOptions(product);
-    selectColor()
+    getColorsOptions(teddy);
     // Au clic du bouton
-    addToShoppingCart(product);
+    addToShoppingCart(teddy);
     // Afficher le nombre de produits du panier dans le menu de navigation
     getCartLength();
 }
 
-function getColorsOptions(product){
-    for (i = 0; i < product.colors.length; i++) {
+function getColorsOptions(teddy){
+    for (i = 0; i < teddy.colors.length; i++) {
         // Récupérer le template
         const templateElt = document.getElementById("optionTemplate");
         // Cloner le template
         const cloneTempElt = document.importNode(templateElt.content, true);
         // Remplir pour chaque clone du template
-        cloneTempElt.getElementById("productColor").textContent = product.colors[i];
+        cloneTempElt.getElementById("productColor").textContent = teddy.colors[i];
         cloneTempElt.getElementById("productColor").id = "productColor" + [i+1];
         // Afficher les clones du template à l'endroit souhaité
         document.getElementById("productOptions").appendChild(cloneTempElt);
     };
-    // Pour chaque couleur de la liste
-    let colors = document.querySelectorAll("option");
-    for (let o = 0; o < colors.length; o++) {
-        const color = colors[o];
-        // Donner un attribut "valeur = texte du champ"
-        color.setAttribute("value",color.textContent)
-    }
 }
 
 //                                     PAS ENCORE BON
@@ -84,7 +77,7 @@ function selectColor(){
 //                                     PAS ENCORE BON - FIN
 
 
-function addToShoppingCart(product){
+function addToShoppingCart(teddy){
     document.getElementById("addToCart").addEventListener("click", function(){
         // Récupérer le panier
         let getCart = JSON.parse(localStorage.getItem("cart")); // Transformer cart (du JSON récupéré dans le stockage du navigateur) en objet JS
@@ -93,8 +86,27 @@ function addToShoppingCart(product){
             // Créer un tableau
             getCart = [];
         };
-        // Ajouter le produit dans le tableau du panier
-        getCart.push(product);
+        // Déclarer que l'ours n'est pas encore dans le panier
+        let teddyAlreadyInCart = false;
+        // Initialiser la quantité à 1
+        teddy.quantity = 1;
+        // Pour tous les articles du panier
+        for (let index = 0; index < getCart.length; index++) {
+            const article = getCart[index];
+            // Si l'id de l'article = l'id de l'ours
+            if (article._id === teddy._id) {
+                // L'article et l'ours sont le même produit = même index
+                teddyAlreadyInCart = index;
+            }
+        }; // Fin boucle
+        // Si l'ours est déjà dans le panier
+        if (teddyAlreadyInCart !== false) {
+            // Incrémenter la quantité de cet ours dans le panier
+            getCart[teddyAlreadyInCart].quantity += 1;
+        } else { // Si l'ours n'est pas encore dans le panier
+            // Ajouter le produit dans le tableau du panier
+            getCart.push(teddy);
+        }
         // Modifier cart (re-transformé en JSON)
         localStorage.setItem("cart", JSON.stringify(getCart));
         // Afficher l'alerte pour confirmer l'ajout
