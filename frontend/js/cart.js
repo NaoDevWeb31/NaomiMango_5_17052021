@@ -17,8 +17,6 @@ async function main(){
 function fillPage(){
     getCartList();
     getCartLength();
-    getProductQuantity();
-    productTotalPrice();
     showTotalCartAmount();
     deleteCartProduct();
     emptyCart();
@@ -31,8 +29,9 @@ function getCartList(){
     // Si la panier est vide
     if (getCart != null){
         for (let i = getCart.length - 1; i >= 0; i--) {
+            let cartProduct = getCart[i];
             // Appel de l'API via fetch pour récupérer les données du stockage
-            return fetch(urlApi + getCart[i]._id)
+            return fetch(urlApi + cartProduct._id)
                 .then(function(response){
                     // Récupérer la réponse en JSON
                     return response.json();
@@ -104,7 +103,17 @@ function getCartProductData(){
         cloneTempElt.getElementById("productLink").href = "product.html?id=" + cartProduct._id;
         cloneTempElt.getElementById("productName").textContent = cartProduct.name;
         cloneTempElt.getElementById("productPrice").textContent = cartProduct.price/100 + ",00 €";
-        cloneTempElt.getElementById("productTotalPrice").textContent = cartProduct.price/100 + ",00 €";
+        cloneTempElt.getElementById("productQuantity").selectedIndex = cartProduct.quantity - 1;
+        cloneTempElt.getElementById("productTotalPrice").textContent = (cartProduct.quantity * cartProduct.price) / 100 + ",00 €";
+        // Au changement de la quantité
+        const quantityEltId = cloneTempElt.getElementById("productQuantity");
+        quantityEltId.addEventListener("change", function(event){
+            event.preventDefault();
+            const newQuantity = event.target.selectedIndex + 1;
+            const subtotalId = event.target.parentElement.parentElement.parentElement.parentElement.querySelector("#productTotalPrice");
+            const newSubtotal = (cartProduct.price * newQuantity) / 100 + ",00 €";
+            subtotalId.textContent = newSubtotal;
+        })
         // Afficher le clone du template à l'endroit souhaité
         document.getElementById("cartList").appendChild(cloneTempElt);
     }
@@ -114,46 +123,6 @@ const cartBody = document.getElementById("cartList");
 const cartRows = cartBody.getElementsByTagName("tr");
 
 //                                     PAS ENCORE BON
-
-const getProductQuantity = () => {
-    // Pour chaque ligne du panier
-    for (let r = 0; r < cartRows.length; r++) {
-        const element = cartRows[r];
-        // Récupérer la quantité du produit
-        let quantity = element.querySelector("#productQuantity");
-        // Au changement de la quantité
-        quantity.addEventListener("change", function(event){
-            // Récupérer la quantité
-            let productQuantity = event.target.value;
-            return productQuantity
-        })
-    }
-}
-
-const productTotalPrice = () => {
-    // Pour tous les produits du panier
-    for (let cartProduct of getCart) {
-        // Prix unitaire par produit
-        const pricePerProduct = cartProduct.price/100;
-        // Pour chaque ligne du panier
-        for (let r = 0; r < cartRows.length; r++){
-            const element = cartRows[r];
-            // Récupérer la quantité du produit
-            let quantity = element.querySelector("#productQuantity");
-            // Au changement de la quantité
-            quantity.addEventListener("change", function(event){
-                // Récupérer la quantité
-                let productQuantity = event.target.value;
-                // Calcul du sous-total
-                totalPricePerProduct = pricePerProduct * productQuantity;
-                // Affichage du sous-total
-                element.querySelector("#productTotalPrice").textContent = totalPricePerProduct + ",00 €";
-            })
-        }
-    }
-}
-
-//                                     PAS ENCORE BON - FIN
 
 function showTotalCartAmount(){
     // Afficher le montant total du panier quand il n'est pas vide
@@ -185,6 +154,8 @@ function totalCartAmount(){
     localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
     return totalAmount;
 }
+
+//                                     PAS ENCORE BON - FIN
 
 function deleteCartProduct(){
     // Récupérer tous les icônes de suppression
@@ -226,11 +197,11 @@ const formFields = [firstNameId, lastNameId, addressId, zipId, cityId, emailId];
 
 // Validation pour noms et ville
 const nameRegEx = (value) => {
-    return /^[A-Za-zéÉèÈêÊàÀôëç'-]{3,20}$/.test(value);
+    return /^[A-Za-zéÉèÈêÊàÀôëçî'-]{3,20}$/.test(value);
 }
 // Validation pour adresse
 const adressRegEx = (value) => {
-    return /^(?:[0-9]{2,3})+(?: [a-zA-Z]{3,15})+(?:[ a-zA-ZéÉèÈêÊàÀôëçù^_¨'-]{2,50})$/.test(value);
+    return /^(?:[0-9]{2,3})+(?: [a-zA-Z]{3,15})+(?:[ a-zA-ZéÉèÈêÊàÀôëçùî^_¨'-]{2,50})$/.test(value);
 }
 // Validation pour code postal
 const zipRegEx = (value) => {
@@ -310,13 +281,13 @@ function getOrder(){
     }
     products.push(getTotalAmount);
     // Modifier le tableau products (re-transformé en JSON)
-    localStorage.setItem("product", JSON.stringify(products));
+    localStorage.setItem("products", JSON.stringify(products));
 }
 
 // element.className === "form-control is-valid"
 function sendOrder(){
     const contact = localStorage.getItem("contact");
-    const products = localStorage.getItem("product")
+    const products = localStorage.getItem("products")
     // Regrouper infos client + produits et montant total
     const customerOrder = {contact, products};
     if (validateForm()){
@@ -340,6 +311,8 @@ function sendOrder(){
                 // Une erreur s'est produit
                 alert("Erreur lors de l'envoi de la commande");
             });
+    } else {
+        alert("Le formulaire n'a pas été correctement rempli !")
     }
 }
 
