@@ -1985,6 +1985,12 @@ button:not(:disabled),
   .d-sm-table-cell {
     display: table-cell !important;
   }
+  .d-sm-none {
+    display: none !important;
+  }
+  .d-sm-inline {
+    display: inline !important;
+  }
 }
 @media (min-width: 1200px) {
   .fs-1 {
