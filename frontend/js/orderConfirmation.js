@@ -29,3 +29,8 @@ function showOrderData(){
     document.getElementById("mainContent").appendChild(cloneTempElt);
 }
 showOrderData()
+
+const btnToHomepage = document.querySelector("button.btn");
+btnToHomepage.addEventListener("click", function(){
+    localStorage.removeItem("orderId");localStorage.removeItem("customerOrder");localStorage.removeItem("totalAmount");
+})
