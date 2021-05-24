@@ -62,21 +62,6 @@ function getColorsOptions(teddy){
     };
 }
 
-//                                     PAS ENCORE BON
-function selectColor(){
-    // Récupérer le champ de sélection de couleur
-    let colorOptions = document.getElementById("productOptions");
-    // Au changement de l'option
-    colorOptions.addEventListener("change", function(event){
-        // Récupérer la color
-        let colorOption = event.target.value;
-        localStorage.setItem("colorOption", JSON.stringify(colorOption))
-        console.log(colorOption)
-    })
-}
-//                                     PAS ENCORE BON - FIN
-
-
 function addToShoppingCart(teddy){
     document.getElementById("addToCart").addEventListener("click", function(){
         // Récupérer le panier
@@ -113,6 +98,8 @@ function addToShoppingCart(teddy){
         alertAddedToCart();
         // Fermer l'alerte
         dismissAlert();
+        // Nombre de produits dans le panier
+        getCartLength();
     })
 }
 
@@ -144,7 +131,12 @@ function getCartLength(){
     // Récupérer l'emplacement du nombre de produit du panier
     let NumberOfProductsInCart = document.getElementById("NumberOfProductsInCart");
     if (getCart){
-        // Nombre de produit dans le panier
-        NumberOfProductsInCart.textContent = getCart.length;
+        let NumberOfProducts = 0;
+        for (let index = 0; index < getCart.length; index++) {
+            const element = getCart[index];
+        // Nombre de produit dans le panier incrémenter de la valeur de la qté par élément du panier
+        NumberOfProducts += element.quantity;
+        }
+        NumberOfProductsInCart.textContent = NumberOfProducts;
     }
 }
