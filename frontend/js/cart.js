@@ -20,7 +20,6 @@ function fillPage(){
     showTotalCartAmount();
     deleteCartProduct();
     emptyCart();
-    validateForm();
     getOrder();
     order();
 }
@@ -230,7 +229,7 @@ const emailRegEx = (value) => {
 
 function formCheck(formField, regEx){
     // À la saisie du champ sélectionné
-    formField.addEventListener("focus", function(event){
+    formField.addEventListener("input", function(event){
         // Si l'expression régulière sélectionnée est correcte
         if (regEx(event.target.value)){
             event.target.classList.add("is-valid");
@@ -238,7 +237,9 @@ function formCheck(formField, regEx){
             return true;
         // Sinon
         } else if (regEx(event.target.value) == false ){
+            event.target.classList.add("is-invalid");
             event.target.classList.replace("is-valid", "is-invalid");
+            console.log("FALSE");
             return false;
         }
     });
@@ -246,36 +247,35 @@ function formCheck(formField, regEx){
     formField.addEventListener("focus", function(event){
         if (event.target.value === "") {
             event.target.classList.remove("is-valid", "is-invalid");
+            console.log("EN COURS");
         }
     });
 }
 
-function validateForm(){
-    // Valider les champs de noms
-    for (let index = 0; index < formFields.length - 4; index++) {
-        const element = formFields[index];
-        formCheck(element, nameRegEx)
-    };
-    // Valider le champ d'adresse
-    formCheck(addressId, adressRegEx);
-    // Valider le champ de code postal
-    formCheck(zipId, zipRegEx);
-    // Valider le champ de ville
-    formCheck(cityId, nameRegEx);
-    // Valider le champ d'email
-    formCheck(emailId, emailRegEx);
-}
+// Valider le champ de prénom
+formCheck(firstNameId, nameRegEx);
+// Valider le champ de nom
+formCheck(lastNameId, nameRegEx);
+// Valider le champ d'adresse
+formCheck(addressId, adressRegEx);
+// Valider le champ de code postal
+formCheck(zipId, zipRegEx);
+// Valider le champ de ville
+formCheck(cityId, nameRegEx);
+// Valider le champ d'email
+formCheck(emailId, emailRegEx);
 
 function getOrder(){
     // Récupérer tous les inputs du formulaire
-    let inputs = document.querySelectorAll("#formOrder input");
+    let inputs = document.querySelectorAll("input");
     for (let index = 0; index < inputs.length; index++){
         const element = inputs[index];
         // Pour chaque input, écouter une fois la saisie achevée
         element.addEventListener("change", function(){
-            // Si grâce à formCheck(), l'input a une bordure verte (validé)
+            // Si l'input est validé (bordure verte)
             if (element.className === "form-control is-valid"){
-                // Créer l'objet "contact" à envoyer
+                console.log("CHAMP "+element.id+" VALIDÉ");
+                // Créer l'objet "contact" à envoyer et ajouter la valeur
                 let contact = {
                     "firstName" : firstNameId.value,
                     "lastName" : lastNameId.value,
@@ -290,44 +290,47 @@ function getOrder(){
     }
     // Créer le tableau "products" à envoyer
     let products = [];
-    // Récupérer le montant du panier
-    let getTotalAmount = JSON.parse(localStorage.getItem("totalAmount"));
-    // Ajouter le panier et son montant total dans le tableau products
-    for (let p = 0; p < getCart.length; p++) {
-        const element = getCart[p];
+    // Ajouter les id des articles du panier dans le tableau products
+    for (let e = 0; e < getCart.length; e++) {
+        const element = getCart[e];
         products.push(element._id)
     }
-    products.push(getTotalAmount);
     // Modifier le tableau products (re-transformé en JSON)
     localStorage.setItem("products", JSON.stringify(products));
 }
 
-// element.className === "form-control is-valid"
 function sendOrder(){
-    const contact = localStorage.getItem("contact");
-    const products = localStorage.getItem("products")
+    const contact = JSON.parse(localStorage.getItem("contact"));
+    const products = JSON.parse(localStorage.getItem("products"));
     // Regrouper infos client + produits et montant total
-    const customerOrder = {contact, products};
+    const customerOrder = JSON.stringify({contact, products});
+    // Si les 6 inputs sont validés (6 bordures vertes)
+    if (document.querySelectorAll(".form-control.is-valid").length == 6) {
         // Faire la requête POST
         fetch(urlApi + "order",{
             method: "POST",
-            headers: {"Content-Type" : "application.json"},
-            body: JSON.stringify(customerOrder)
+            headers: {"Content-Type" : "application/json"},
+            body: customerOrder
         })
             .then(function(response){
                 // Récupérer la réponse en JSON
                 return response.json();
             })
-            .then(function(customerOrder) {
+            .then(function(json) {
                 // Stocker l'objet qui regroupe les infos client + produits et montant total dans le navigateur
-                localStorage.setItem("customerOrder", JSON.stringify(customerOrder));
-                localStorage.setItem("orderId", customerOrder.orderId)
-                window.location.href = "orderConfirmation.html?orderId=" + customerOrder.orderId;
+                localStorage.setItem("customerOrder", customerOrder);
+                localStorage.removeItem("cart");localStorage.removeItem("products");localStorage.removeItem("contact");
+                localStorage.setItem("orderId", json.orderId)
+                window.location.href = "orderConfirmation.html?orderId=" + json.orderId;
             })
             .catch(function(error){
                 // Une erreur s'est produit
                 alert("Erreur lors de l'envoi de la commande");
             });
+    // Si les 6 inputs ne sont pas validés
+    } else {
+        alert("Veuillez correctement remplir le formulaire !")
+    }
 }
 
 function order(){
