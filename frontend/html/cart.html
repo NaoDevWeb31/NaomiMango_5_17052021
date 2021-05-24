@@ -81,7 +81,7 @@
                             <thead class="table-primary">
                                 <tr class="text-center">
                                     <th class=" d-none d-sm-table-cell">Produit</th>
-                                    <th>Description</th>
+                                    <th><span class="d-sm-none">Produit</span><span class="d-none d-sm-inline">Description</span></th>
                                     <th class=" d-none d-sm-table-cell"> Prix unitaire</th>
                                     <th><span class="d-sm-none">Qté</span><span class="d-none d-sm-inline">Quantité</span></th>
                                     <th class="w-10 w-sm-auto"><span class="visually-hidden">Supprimer le produit du panier</span></th>
@@ -99,8 +99,7 @@
                                             </a>
                                         </td>
                                         <td class="align-middle">
-                                            <span class="fw-bold" id="productName"></span><br/>
-                                           <span id="productColor"></span>
+                                            <span class="fw-bold" id="productName"></span>
                                         </td>
                                         <td class="align-middle d-none d-sm-table-cell" id="productPrice"></td>
                                         <td class="align-middle">
@@ -172,23 +171,23 @@
                 </div>
                 <!-- FORMULAIRE DE COMMANDE -->
                 <form class="row g-3 pb-3">
-                    <div class="col-md-3">
+                    <div class="col-md-3 mb-3">
                         <label for="firstName" class="form-label">Prénom</label>
                         <input type="text" class="form-control" id="firstName" aria-label="Saisie du prénom de l'utilisateur" required placeholder="Claire">
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 mb-3">
                         <label for="lastName" class="form-label">Nom</label>
                         <input type="text" class="form-control" id="lastName" aria-label="Saisie du nom de l'utilisateur" required placeholder="Benoît">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <label for="email" class="form-label">Adresse e-mail</label>
                         <input type="email" class="form-control" id="email" aria-label="Saisie de l'adresse e-mail de l'utilisateur" required placeholder="claire.benoit@exemple.com">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <label for="address" class="form-label">Adresse</label>
                         <input type="text" class="form-control" id="address" aria-label="Saisie de l'adresse de l'utilisateur" required placeholder="30 Avenue des Érables">
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 mb-3">
                         <label for="zip" class="form-label">Code postal</label>
                         <input type="text" class="form-control" id="zip" aria-label="Saisie du code postal de l'utilisateur" required placeholder="75000">
                     </div>
