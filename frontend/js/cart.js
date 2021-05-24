@@ -82,17 +82,25 @@ function dismissAlert(){
 }
 
 function getCartLength(){
+    // Récupérer le panier stocké dans le navigateur
+    let getCart = JSON.parse(localStorage.getItem("cart"));
     // Récupérer l'emplacement du nombre de produit du panier
     let NumberOfProductsInCart = document.getElementById("NumberOfProductsInCart");
     if (getCart){
-        // Nombre de produit dans le panier
-        NumberOfProductsInCart.textContent = getCart.length;
+        let NumberOfProducts = 0;
+        for (let index = 0; index < getCart.length; index++) {
+            const element = getCart[index];
+        // Nombre de produit dans le panier incrémenter de la valeur de la qté par élément du panier
+        NumberOfProducts += element.quantity;
+        }
+        NumberOfProductsInCart.textContent = NumberOfProducts;
     }
 }
 
 function getCartProductData(){
-    // Pour tous les produits du panier
-    for (let cartProduct of getCart) {
+    // Pour chaque produit du panier
+    for (let index = 0; index < getCart.length; index++) {
+        let cartProduct = getCart[index];
         // Récupérer le template de la ligne du panier
         const templateElt = document.getElementById("cartRowTemplate");
         // Cloner le template
@@ -113,6 +121,9 @@ function getCartProductData(){
             const subtotalId = event.target.parentElement.parentElement.parentElement.parentElement.querySelector("#productTotalPrice");
             const newSubtotal = (cartProduct.price * newQuantity) / 100 + ",00 €";
             subtotalId.textContent = newSubtotal;
+            // for (const cartProduct of getCart) {
+            //     console.log(cartProduct.newQuantity);
+            // }
         })
         // Afficher le clone du template à l'endroit souhaité
         document.getElementById("cartList").appendChild(cloneTempElt);
@@ -121,6 +132,10 @@ function getCartProductData(){
 
 const cartBody = document.getElementById("cartList");
 const cartRows = cartBody.getElementsByTagName("tr");
+for (let index = 0; index < cartRows.length; index++) {
+    let row = cartRows[index];
+    let subTotals = row.lastElementChild;
+}
 
 //                                     PAS ENCORE BON
 
@@ -140,16 +155,17 @@ function showTotalCartAmount(){
 
 function totalCartAmount(){
     // Tableau des prix totaux
-    let totalCartPrice = [];
+    let totalCartPrices = [];
     // Récupérer les prix dans le panier
     for (let index = 0; index < getCart.length; index++) {
-        sumOfPricesOfProductsInCart = getCart[index].price/100;
+        let element = getCart[index];
+        let productSubtotal = element.price/100 * element.quantity;
         // Mettre tous les prix dans le tableau
-        totalCartPrice.push(sumOfPricesOfProductsInCart)
+        totalCartPrices.push(productSubtotal)
     }
     // Additionner les prix du tableau
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const totalAmount = totalCartPrice.reduce(reducer, 0);
+    const totalAmount = totalCartPrices.reduce(reducer, 0);
     // Envoyer le nouveau montant du panier dans le stockage du navigateur
     localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
     return totalAmount;
@@ -214,14 +230,16 @@ const emailRegEx = (value) => {
 
 function formCheck(formField, regEx){
     // À la saisie du champ sélectionné
-    formField.addEventListener("input", function(event){
+    formField.addEventListener("focus", function(event){
         // Si l'expression régulière sélectionnée est correcte
         if (regEx(event.target.value)){
             event.target.classList.add("is-valid");
             event.target.classList.replace("is-invalid","is-valid");
+            return true;
         // Sinon
         } else if (regEx(event.target.value) == false ){
             event.target.classList.replace("is-valid", "is-invalid");
+            return false;
         }
     });
     // Après une première saisie, quand le champ est en focus
@@ -290,11 +308,10 @@ function sendOrder(){
     const products = localStorage.getItem("products")
     // Regrouper infos client + produits et montant total
     const customerOrder = {contact, products};
-    if (validateForm()){
         // Faire la requête POST
-        fetch(urlApi+"order",{
+        fetch(urlApi + "order",{
             method: "POST",
-            headers: {"Accept" : "application/json", "Content-Type" : "application.json"},
+            headers: {"Content-Type" : "application.json"},
             body: JSON.stringify(customerOrder)
         })
             .then(function(response){
@@ -311,9 +328,6 @@ function sendOrder(){
                 // Une erreur s'est produit
                 alert("Erreur lors de l'envoi de la commande");
             });
-    } else {
-        alert("Le formulaire n'a pas été correctement rempli !")
-    }
 }
 
 function order(){
