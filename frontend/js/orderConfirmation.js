@@ -1,11 +1,19 @@
-// Récupérer l'identifiant de la commande
-const orderId
+// Récupérer l'identifiant de la commande pour l'URL
+function getOrderId(){
+    return new URL(location.href).searchParams.get("orderId")
+}
+getOrderId()
 
-// Récupérer les infos du client de la commande stocké dans le navigateur
-const contact
-
-// Récupérer le montant de la commande stocké dans le navigateur
-const orderAmount
+// Récupérer l'identifiant de la commande stocké dans le navigateur
+const orderId = localStorage.getItem("orderId");
+// Récupérer les infos de la commande du client stocké dans le navigateur
+const customerOrder = JSON.parse(localStorage.getItem("customerOrder"));
+// Récupérer le tableau de produits
+const products = customerOrder.products;
+// Récupérer les infos du client
+const contact = customerOrder.contact;
+// Récupérer le montant de la commande
+const orderAmount = localStorage.getItem("totalAmount");
 
 function showOrderData(){
     // Récupérer le template de la page de confirmation
@@ -20,5 +28,4 @@ function showOrderData(){
     // Afficher le clone du template à l'endroit souhaité
     document.getElementById("mainContent").appendChild(cloneTempElt);
 }
-
 showOrderData()
