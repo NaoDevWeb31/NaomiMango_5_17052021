@@ -1204,6 +1204,12 @@ button:not(:disabled),
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  transition: all 150ms;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
 .card-body {
@@ -1961,6 +1967,10 @@ button:not(:disabled),
   color: #8f5bfe !important;
 }
 
+.text-success {
+  color: #198754 !important;
+}
+
 .bg-primary {
   background-color: #f3e9f1 !important;
 }
@@ -2028,6 +2038,9 @@ button:not(:disabled),
 }
 .fa-times:before {
   content: "\f00d";
+}
+.fa-check-circle:before {
+  content: "\f058";
 }
 @font-face {
   font-family: "Font Awesome 5 Free";
