@@ -1,6 +1,6 @@
 // Récupérer l'identifiant de la commande pour l'URL
 function getOrderId(){
-    return new URL(location.href).searchParams.get("orderId")
+    return new URLSearchParams(document.location.search).get("orderId")
 }
 getOrderId()
 
