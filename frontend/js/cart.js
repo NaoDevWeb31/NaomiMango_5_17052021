@@ -216,7 +216,7 @@ const nameRegEx = (value) => {
 }
 // Validation pour adresse
 const adressRegEx = (value) => {
-    return /^(?:[0-9]{2,3})+(?: [a-zA-Z]{3,15})+(?:[ a-zA-ZéÉèÈêÊàÀôëçùî^_¨'-]{2,50})$/.test(value);
+    return /^(?:[0-9]{1,3})+(?: [a-zA-Z]{3,15})+(?:[ a-zA-ZéÉèÈêÊàÀôëçùî^_¨'-]{2,50})$/.test(value);
 }
 // Validation pour code postal
 const zipRegEx = (value) => {
