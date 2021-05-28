@@ -316,12 +316,12 @@ function sendOrder(){
                 // Récupérer la réponse en JSON
                 return response.json();
             })
-            .then(function(json) {
-                // Stocker l'objet qui regroupe les infos client + produits et montant total dans le navigateur
+            .then(function(response) {
+                // Stocker l'objet qui regroupe les infos client + produits et le montant total dans le navigateur
                 localStorage.setItem("customerOrder", customerOrder);
                 localStorage.removeItem("cart");localStorage.removeItem("products");localStorage.removeItem("contact");
-                localStorage.setItem("orderId", json.orderId)
-                window.location.href = "orderConfirmation.html?orderId=" + json.orderId;
+                localStorage.setItem("orderId", response.orderId)
+                window.location.href = "orderConfirmation.html?orderId=" + response.orderId;
             })
             .catch(function(error){
                 // Une erreur s'est produit
