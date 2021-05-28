@@ -55,7 +55,15 @@ function getCartLength(){
     // Récupérer l'emplacement du nombre de produit du panier
     let NumberOfProductsInCart = document.getElementById("NumberOfProductsInCart");
     if (getCart){
-        // Nombre de produit dans le panier
-        NumberOfProductsInCart.textContent = getCart.length;
+        let NumberOfProducts = 0;
+        for (let index = 0; index < getCart.length; index++) {
+            const element = getCart[index];
+        // Nombre de produit dans le panier incrémenter de la valeur de la qté par élément du panier
+        NumberOfProducts += element.quantity;
+        }
+        NumberOfProductsInCart.textContent = NumberOfProducts;
+        if (NumberOfProducts < 1){
+            NumberOfProductsInCart.innerText = "";
+        }
     }
 }
