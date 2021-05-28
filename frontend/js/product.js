@@ -80,14 +80,14 @@ function addToShoppingCart(teddy){
             const article = getCart[index];
             // Si l'id de l'article = l'id de l'ours
             if (article._id === teddy._id) {
-                // L'article et l'ours sont le même produit = même index
+                // L'article et l'ours sont le même produit = même index => article déjà dans le panier
                 teddyAlreadyInCart = index;
             }
         }; // Fin boucle
         // Si l'ours est déjà dans le panier
         if (teddyAlreadyInCart !== false) {
             // Incrémenter la quantité de cet ours dans le panier
-            getCart[teddyAlreadyInCart].quantity += 1;
+            getCart[teddyAlreadyInCart].quantity ++;
         } else { // Si l'ours n'est pas encore dans le panier
             // Ajouter le produit dans le tableau du panier
             getCart.push(teddy);
@@ -134,9 +134,12 @@ function getCartLength(){
         let NumberOfProducts = 0;
         for (let index = 0; index < getCart.length; index++) {
             const element = getCart[index];
-        // Nombre de produit dans le panier incrémenter de la valeur de la qté par élément du panier
-        NumberOfProducts += element.quantity;
+            // Nombre de produit dans le panier incrémenter de la valeur de la qté par élément du panier
+            NumberOfProducts += element.quantity;
         }
         NumberOfProductsInCart.textContent = NumberOfProducts;
+        if (NumberOfProducts < 1){
+            NumberOfProductsInCart.innerText = "";
+        }
     }
 }
