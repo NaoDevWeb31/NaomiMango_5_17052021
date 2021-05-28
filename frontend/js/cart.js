@@ -46,16 +46,20 @@ function getCartList(){
         }
     // Si le panier est vide
     } else {
-        let cartTable = document.getElementById("cartTable");
-        let emptyCartRow = document.getElementById("emptyCartRow")
-        let cartRowContent = document.getElementById("cartRowContent");
-        cartTable.removeChild(cartRowContent);
-        cartTable.removeChild(emptyCartRow);
-        // Afficher l'alerte
-        alertEmptyCart();
-        // Fermer l'alerte
-        dismissAlert();
+        emptyCartList()
     }
+}
+
+function emptyCartList(){
+    let cartTable = document.getElementById("cartTable");
+    let emptyCartRow = document.getElementById("emptyCartRow")
+    let cartRowContent = document.getElementById("cartRowContent");
+    cartTable.removeChild(cartRowContent);
+    cartTable.removeChild(emptyCartRow);
+    // Afficher l'alerte
+    alertEmptyCart();
+    // Fermer l'alerte
+    dismissAlert();
 }
 
 function alertEmptyCart(){
@@ -188,13 +192,18 @@ function deleteCartProduct(){
             document.location.reload();
         })
     }
+    // Si le total = 0,00€
+    if (document.getElementById("totalCartPrice").textContent == "0,00€") {
+        emptyCartList();
+        localStorage.clear();
+    }
 }
 
 function emptyCart(){
     let btnEmptyCart = document.getElementById("emptyCart");
     btnEmptyCart.addEventListener("click", function(event){
         event.preventDefault();
-        localStorage.removeItem("cart");
+        localStorage.clear();
         document.location.reload();
     })
 }
