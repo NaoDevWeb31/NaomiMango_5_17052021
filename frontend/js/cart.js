@@ -97,6 +97,9 @@ function getCartLength(){
         NumberOfProducts += element.quantity;
         }
         NumberOfProductsInCart.textContent = NumberOfProducts;
+        if (NumberOfProducts < 1){
+            NumberOfProductsInCart.innerText = "";
+        }
     }
 }
 
@@ -131,13 +134,6 @@ function getCartProductData(){
         // Afficher le clone du template à l'endroit souhaité
         document.getElementById("cartList").appendChild(cloneTempElt);
     }
-}
-
-const cartBody = document.getElementById("cartList");
-const cartRows = cartBody.getElementsByTagName("tr");
-for (let index = 0; index < cartRows.length; index++) {
-    let row = cartRows[index];
-    let subTotals = row.lastElementChild;
 }
 
 //                                     PAS ENCORE BON
