@@ -17,7 +17,6 @@ async function main(){
 function fillPage(){
     getCartList();
     getCartLength();
-    showTotalCartAmount();
     deleteCartProduct();
     emptyCart();
     getOrder();
@@ -103,8 +102,16 @@ function getCartLength(){
     }
 }
 
+//                                     PAS ENCORE BON
+
 function getCartProductData(){
-    // Pour chaque produit du panier
+    // Récupérer le template de la ligne de total du panier
+    const templateTotalElt = document.getElementById("totalCartRowTemplate");
+    // Cloner le template du total
+    const cloneTempTotalElt = document.importNode(templateTotalElt.content, true);
+    // Initialiser le montant total
+    let totalAmount = 0;
+    //BOUCLE pour chaque produit du panier
     for (let index = 0; index < getCart.length; index++) {
         let cartProduct = getCart[index];
         // Récupérer le template de la ligne du panier
@@ -118,56 +125,35 @@ function getCartProductData(){
         cloneTempElt.getElementById("productName").textContent = cartProduct.name;
         cloneTempElt.getElementById("productPrice").textContent = cartProduct.price/100 + ",00 €";
         cloneTempElt.getElementById("productQuantity").selectedIndex = cartProduct.quantity - 1;
-        cloneTempElt.getElementById("productTotalPrice").textContent = (cartProduct.quantity * cartProduct.price) / 100 + ",00 €";
+        cloneTempElt.getElementById("productTotalPrice").textContent = cartProduct.quantity * cartProduct.price/100 + ",00 €";
         // Au changement de la quantité
         const quantityEltId = cloneTempElt.getElementById("productQuantity");
         quantityEltId.addEventListener("change", function(event){
             event.preventDefault();
             const newQuantity = event.target.selectedIndex + 1;
             const subtotalId = event.target.parentElement.parentElement.parentElement.parentElement.querySelector("#productTotalPrice");
-            const newSubtotal = (cartProduct.price * newQuantity) / 100 + ",00 €";
+            const newSubtotal = cartProduct.price/100 * newQuantity + ",00 €";
             subtotalId.textContent = newSubtotal;
             // for (const cartProduct of getCart) {
             //     console.log(cartProduct.newQuantity);
             // }
         })
+        // Si la qté affichée = la qté de départ
+        if (quantityEltId.value == cartProduct.quantity) {
+            let soustotal = cartProduct.price/100 * cartProduct.quantity;
+            // Ajouter chaque sous-total au montant total
+            totalAmount += soustotal;
+            console.log("Montant total avec qté de départ : " + totalAmount);
+            // Envoyer le montant total du panier dans le stockage du navigateur
+            localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
+        }
         // Afficher le clone du template à l'endroit souhaité
         document.getElementById("cartList").appendChild(cloneTempElt);
-    }
-}
-
-//                                     PAS ENCORE BON
-
-function showTotalCartAmount(){
-    // Afficher le montant total du panier quand il n'est pas vide
-    if (getCart != null){
-        // Récupérer le template de la ligne de total du panier
-        const templateTotalElt = document.getElementById("totalCartRowTemplate");
-        // Cloner le template
-        const cloneTempTotalElt = document.importNode(templateTotalElt.content, true);
-        // Remplir pour le clone du template
-        cloneTempTotalElt.getElementById("totalCartPrice").textContent = totalCartAmount() + ",00€";
-        // Afficher le clone du template à l'endroit souhaité
-        document.getElementById("cartFoot").appendChild(cloneTempTotalElt);
-    }
-}
-
-function totalCartAmount(){
-    // Tableau des prix totaux
-    let totalCartPrices = [];
-    // Récupérer les prix dans le panier
-    for (let index = 0; index < getCart.length; index++) {
-        let element = getCart[index];
-        let productSubtotal = element.price/100 * element.quantity;
-        // Mettre tous les prix dans le tableau
-        totalCartPrices.push(productSubtotal)
-    }
-    // Additionner les prix du tableau
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const totalAmount = totalCartPrices.reduce(reducer, 0);
-    // Envoyer le nouveau montant du panier dans le stockage du navigateur
-    localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
-    return totalAmount;
+    } // Fin BOUCLE pour chaque produit du panier
+    // Remplir pour le clone du template du total
+    cloneTempTotalElt.getElementById("totalCartPrice").textContent = totalAmount + ",00€";
+    // Afficher le clone du template du total à l'endroit souhaité
+    document.getElementById("cartFoot").appendChild(cloneTempTotalElt);
 }
 
 //                                     PAS ENCORE BON - FIN
