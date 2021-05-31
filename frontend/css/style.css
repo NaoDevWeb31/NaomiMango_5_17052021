@@ -1460,6 +1460,10 @@ button:not(:disabled),
   width: 25% !important;
 }
 
+.w-45 {
+  width: 45% !important;
+}
+
 .w-50 {
   width: 50% !important;
 }

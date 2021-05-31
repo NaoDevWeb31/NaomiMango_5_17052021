@@ -65,38 +65,55 @@
                     </div>
                 </div>
             </section>
-            <section class="container my-5">
+            <section class="container my-4">
                 <div class="row" id="mainContent">
                     <!-- IMAGE -->
                     <div class="col-12 col-lg-6 mb-2 d-flex align-items-center">
                         <img src="" alt="Modèle de peluche" class="img-fluid border-dark" id="productImage">
                     </div>
                     <!-- DESCRIPTION PRODUIT -->
-                    <div class="col-12 col-lg-6 d-flex flex-column justify-content-between">
+                    <div class="col-12 col-lg-6 d-flex flex-column">
                         <h1 class="display-6" id="productName"></h1>
                         <h2 class="h5 border-bottom pb-2 fw-normal" id="productDescription"></h2>
                         <div class="mb-3">
-                            <img src="../img/star.png" alt="Note">
-                            <img src="../img/star.png" alt="Note">
-                            <img src="../img/star.png" alt="Note">
-                            <img src="../img/star.png" alt="Note">
-                            <img src="../img/star.png" alt="Note">
+                            <img src="../img/star.png" alt="Note 1 étoile">
+                            <img src="../img/star.png" alt="Note 2 étoiles">
+                            <img src="../img/star.png" alt="Note 3 étoiles">
+                            <img src="../img/star.png" alt="Note 4 étoiles">
+                            <img src="../img/star.png" alt="Note 5 étoiles">
                             - 48 Avis
                         </div>
                         <form action="">
                             <div class="form-group mb-3">
-                                <label for="productOptions" >Couleur :</label>
-                                <select name="colors" id="productOptions" class="form-select" aria-label="Sélection de la couleur du produit" required>
+                                <!-- Couleur -->
+                                <label for="productOptions">Couleur :</label>
+                                <select name="colors" id="productOptions" class="form-select" aria-label="Sélection de la couleur du produit">
                                     <option value="">Choissisez la couleur de votre peluche</option>
                                     <template id="optionTemplate">
                                         <option value="color" id="productColor"></option>
                                     </template>
                                 </select>
+                                <!-- Quantité -->
+                                <div class="col-6 col-sm-3 col-lg-4 mt-2">
+                                    <label for="productQuantity" class="form-label">Quantité :</label>
+                                    <div class="d-flex">
+                                        <div class="mx-1">
+                                            <button class="btn btn-dark" id="addQuantity">+</button>
+                                        </div>
+                                        <input type="text" name="quantity" id="productQuantity" class="form-control text-center" aria-label="Sélection de la quantité de produit">
+                                        <div class="mx-1">
+                                            <button class="btn btn-dark" id="deleteQuantity">-</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                         <p class="h4" id="productPrice"></p>
                         <p>En stock</p>
-                        <button class="btn btn-dark" id="addToCart"> Ajouter au panier</button>
+                        <div class="d-flex justify-content-evenly">
+                            <button class="btn btn-dark w-45" id="addToCart"> Ajouter au panier</button>
+                            <button class="btn btn-dark w-45" id="takeFromCart"> Retirer du panier</button>
+                        </div>
                     </div>
                     <!-- ALERTE D'AJOUT AU PANIER -->
                     <template id="alertTemplate">
@@ -104,6 +121,26 @@
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <h4 class="alert-heading">Le produit a bien été ajouté au panier !</h4>
                                 <p>Rendez-vous sur votre <a href="cart.html" class="alert-link">panier</a> ou continuez vos achats.</p>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span class="visually-hidden">Fermer</span></button>
+                            </div>
+                        </div>
+                    </template>
+                    <!-- ALERTE DE RETRAIT DU PANIER -->
+                    <template id="alertTemplate2">
+                        <div  class="col-12 mt-4" id="alertTakenFromCart">
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                <h4 class="alert-heading">Un article a bien été retiré du panier !</h4>
+                                <p>Vous pouvez continuez de retirer ce produit du panier ou continuer vos achats.</p>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span class="visually-hidden">Fermer</span></button>
+                            </div>
+                        </div>
+                    </template>
+                    <!-- ALERTE DE RETRAIT TOTAL DU PANIER -->
+                    <template id="alertTemplate3">
+                        <div  class="col-12 mt-4" id="alertOffCart">
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                <h4 class="alert-heading">Le produit a bien été retiré du panier !</h4>
+                                <p>Vous pouvez continuez vos achats.</p>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span class="visually-hidden">Fermer</span></button>
                             </div>
                         </div>
@@ -130,7 +167,7 @@
             </div>
         </footer>
         <!-- Optional JavaScript -->
-        <script src="../js/teddy.js"></script>
-        <script src="../js/product.js"></script>
+        <script defer src="../js/teddy.js"></script>
+        <script defer src="../js/product.js"></script>
     </body>
 </html>
