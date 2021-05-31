@@ -40,10 +40,44 @@ function fillPage(teddy){
     document.getElementById("productName").textContent = teddy.name;
     document.getElementById("productDescription").textContent = teddy.description;
     document.getElementById("productPrice").textContent = teddy.price/100 + ",00 €";
+    // QUANTITÉ
+    document.getElementById("productQuantity").value = teddy.quantity;
+    console.log(teddy.quantity);
+    let inputQtyId = document.getElementById("productQuantity");
+    let btnAddQtyId = document.getElementById("addQuantity");
+    let btnDeleteQtyId = document.getElementById("deleteQuantity");
+    // En cliquant sur le bouton +
+    btnAddQtyId.addEventListener("click", function(event){
+        event.preventDefault();
+        if (teddy.quantity > 0 && teddy.quantity < 10) {
+            teddy.quantity ++;
+            inputQtyId.value = teddy.quantity;
+            console.log(teddy.quantity);
+            inputQtyId.value = teddy.quantity;
+        } else if (teddy.quantity > 10) {
+            inputQtyId.value = teddy.quantity = 10
+        }
+        // Adapter le prix
+        document.getElementById("productPrice").textContent = ((teddy.price/100)*teddy.quantity) + ",00 €";
+    });
+    // En cliquant sur le bouton -
+    btnDeleteQtyId.addEventListener("click", function(event){
+        event.preventDefault();
+        if (teddy.quantity > 1 && teddy.quantity <= 10) {
+            teddy.quantity --;
+            inputQtyId.value = teddy.quantity;
+            console.log(teddy.quantity);
+        } else if (teddy.quantity < 1) {
+            inputQtyId.value = teddy.quantity = 1;
+        }
+        // Adapter le prix
+        document.getElementById("productPrice").textContent = ((teddy.price/100)*teddy.quantity) + ",00 €";
+    });
     // Sélection d'options
     getColorsOptions(teddy);
-    // Au clic du bouton
+    // Au clic des boutons "ajouter" et "retirer"
     addToShoppingCart(teddy);
+    takeFromShoppingCart(teddy)
     // Afficher le nombre de produits du panier dans le menu de navigation
     getCartLength();
 }
@@ -73,8 +107,6 @@ function addToShoppingCart(teddy){
         };
         // Déclarer que l'ours n'est pas encore dans le panier
         let teddyAlreadyInCart = false;
-        // Initialiser la quantité à 1
-        teddy.quantity = 1;
         // Pour tous les articles du panier
         for (let index = 0; index < getCart.length; index++) {
             const article = getCart[index];
@@ -87,7 +119,7 @@ function addToShoppingCart(teddy){
         // Si l'ours est déjà dans le panier
         if (teddyAlreadyInCart !== false) {
             // Incrémenter la quantité de cet ours dans le panier
-            getCart[teddyAlreadyInCart].quantity ++;
+            getCart[teddyAlreadyInCart].quantity += teddy.quantity;
         } else { // Si l'ours n'est pas encore dans le panier
             // Ajouter le produit dans le tableau du panier
             getCart.push(teddy);
@@ -112,16 +144,85 @@ function alertAddedToCart(){
     document.getElementById("mainContent").appendChild(cloneTempAltElt);
 }
 
+function takeFromShoppingCart(teddy){
+    document.getElementById("takeFromCart").addEventListener("click", function(){
+        // Récupérer le panier
+        let getCart = JSON.parse(localStorage.getItem("cart")); // Transformer cart (du JSON récupéré dans le stockage du navigateur) en objet JS
+        // Si la panier est vide
+        if (getCart !== null){
+            // Déclarer que l'ours n'est pas encore dans le panier
+            let teddyAlreadyInCart = false;
+            // Pour tous les articles du panier
+            for (let index = 0; index < getCart.length; index++) {
+                const article = getCart[index];
+                // Si l'id de l'article = l'id de l'ours
+                if (article._id === teddy._id) {
+                    // L'article et l'ours sont le même produit = même index => déja dans le panier
+                    teddyAlreadyInCart = index;
+                }
+            }; // Fin boucle
+            // Si l'ours est déjà dans le panier
+            if (teddyAlreadyInCart !== false) {
+                // Décrémenter la quantité de cet ours dans le panier
+                getCart[teddyAlreadyInCart].quantity --;
+                // Si la quantité de cet ours < 1
+                if (getCart[teddyAlreadyInCart].quantity < 1){
+                    // Supprimer cet ours du panier
+                    getCart.splice(teddyAlreadyInCart, 1);
+                    // Afficher l'alerte pour confirmer le retrait total du produit dans panier
+                    alertOffCart();
+                } else {
+                    // Afficher l'alerte pour confirmer le retrait d'un produit
+                    alertTakenFromCart();
+                }
+            }
+            // Modifier cart (re-transformé en JSON)
+            localStorage.setItem("cart", JSON.stringify(getCart));
+            // Fermer l'alerte
+            dismissAlert();
+            // Nombre de produits dans le panier
+            getCartLength();
+        };
+    })
+}
+
+function alertTakenFromCart(){
+    // Récupérer le template de l'alerte
+    const templateAltElt = document.getElementById("alertTemplate2");
+    // Cloner le template de l'alerte
+    const cloneTempAltElt = document.importNode(templateAltElt.content, true);
+    // Afficher l'alerte à l'endroit souhaité
+    document.getElementById("mainContent").appendChild(cloneTempAltElt);
+}
+
+function alertOffCart(){
+    // Récupérer le template de l'alerte
+    const templateAltElt = document.getElementById("alertTemplate3");
+    // Cloner le template de l'alerte
+    const cloneTempAltElt = document.importNode(templateAltElt.content, true);
+    // Afficher l'alerte à l'endroit souhaité
+    document.getElementById("mainContent").appendChild(cloneTempAltElt);
+}
+
 function dismissAlert(){
     // Récupérer le bouton de fermeture
     let btnClose = document.querySelector(".btn-close");
     // Au clic du bouton
     btnClose.addEventListener("click", function(event){
         event.preventDefault();
-        // Récupérer le conteneur de l'alerte
+        // Récupérer les conteneurs des alertes
+        let main = document.getElementById("mainContent")
         let alert = document.getElementById("alertAddedToCart");
-        // Supprimer le conteneur de l'alerte
-        alert.remove();
+        let alert2 = document.getElementById("alertTakenFromCart");
+        let alert3 = document.getElementById("alertOffCart");
+        // Supprimer les conteneurs des alertes
+        if (alert){
+            main.removeChild(alert);
+        } else if (alert2){
+            main.removeChild(alert2);
+        } else if (alert3){
+            main.removeChild(alert3);
+        }
     });
 }
 
