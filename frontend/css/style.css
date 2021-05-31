@@ -1963,6 +1963,10 @@ button:not(:disabled),
   text-align: center !important;
 }
 
+.text-decoration-none {
+  text-decoration: none;
+}
+
 .text-white {
   color: #fff !important;
 }

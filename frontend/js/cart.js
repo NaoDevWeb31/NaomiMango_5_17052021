@@ -102,8 +102,6 @@ function getCartLength(){
     }
 }
 
-//                                     PAS ENCORE BON
-
 function getCartProductData(){
     // Récupérer le template de la ligne de total du panier
     const templateTotalElt = document.getElementById("totalCartRowTemplate");
@@ -119,44 +117,28 @@ function getCartProductData(){
         // Cloner le template
         const cloneTempElt = document.importNode(templateElt.content, true);
         // Remplir pour chaque clone du template
+        cloneTempElt.getElementById("productLink").href = "product.html?id=" + cartProduct._id;
         cloneTempElt.getElementById("productImage").src = cartProduct.imageUrl;
         cloneTempElt.getElementById("productImage").alt += " " + cartProduct.name;
-        cloneTempElt.getElementById("productLink").href = "product.html?id=" + cartProduct._id;
+        cloneTempElt.getElementById("productLink2").href = "product.html?id=" + cartProduct._id;
         cloneTempElt.getElementById("productName").textContent = cartProduct.name;
         cloneTempElt.getElementById("productPrice").textContent = cartProduct.price/100 + ",00 €";
-        cloneTempElt.getElementById("productQuantity").selectedIndex = cartProduct.quantity - 1;
+        cloneTempElt.getElementById("productQuantity").textContent = cartProduct.quantity;
         cloneTempElt.getElementById("productTotalPrice").textContent = cartProduct.quantity * cartProduct.price/100 + ",00 €";
-        // Au changement de la quantité
-        const quantityEltId = cloneTempElt.getElementById("productQuantity");
-        quantityEltId.addEventListener("change", function(event){
-            event.preventDefault();
-            const newQuantity = event.target.selectedIndex + 1;
-            const subtotalId = event.target.parentElement.parentElement.parentElement.parentElement.querySelector("#productTotalPrice");
-            const newSubtotal = cartProduct.price/100 * newQuantity + ",00 €";
-            subtotalId.textContent = newSubtotal;
-            // for (const cartProduct of getCart) {
-            //     console.log(cartProduct.newQuantity);
-            // }
-        })
-        // Si la qté affichée = la qté de départ
-        if (quantityEltId.value == cartProduct.quantity) {
-            let soustotal = cartProduct.price/100 * cartProduct.quantity;
-            // Ajouter chaque sous-total au montant total
-            totalAmount += soustotal;
-            console.log("Montant total avec qté de départ : " + totalAmount);
-            // Envoyer le montant total du panier dans le stockage du navigateur
-            localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
-        }
+        // Calculer le sous-total
+        let subtotal = cartProduct.price/100 * cartProduct.quantity;
+        // Ajouter chaque sous-total au montant total
+        totalAmount += subtotal;
+        // Envoyer le montant total du panier dans le stockage du navigateur
+        localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
         // Afficher le clone du template à l'endroit souhaité
         document.getElementById("cartList").appendChild(cloneTempElt);
-    } // Fin BOUCLE pour chaque produit du panier
+    }// Fin BOUCLE pour chaque produit du panier
     // Remplir pour le clone du template du total
     cloneTempTotalElt.getElementById("totalCartPrice").textContent = totalAmount + ",00€";
     // Afficher le clone du template du total à l'endroit souhaité
     document.getElementById("cartFoot").appendChild(cloneTempTotalElt);
 }
-
-//                                     PAS ENCORE BON - FIN
 
 function deleteCartProduct(){
     // Récupérer tous les icônes de suppression
@@ -191,6 +173,7 @@ function emptyCart(){
 }
 
 //                                      FORMULAIRE
+
 const firstNameId = document.getElementById("firstName");
 const lastNameId = document.getElementById("lastName");
 const addressId = document.getElementById("address");

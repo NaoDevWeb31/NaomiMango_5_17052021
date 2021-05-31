@@ -99,28 +99,12 @@
                                             </a>
                                         </td>
                                         <td class="align-middle">
-                                            <span class="fw-bold" id="productName"></span>
+                                            <a href="" id="productLink2" class="link-dark text-decoration-none">
+                                                <span class="fw-bold" id="productName"></span>
+                                            </a>
                                         </td>
                                         <td class="align-middle d-none d-sm-table-cell" id="productPrice"></td>
-                                        <td class="align-middle">
-                                            <form action="">
-                                                <div class="form-group">
-                                                    <label for="productQuantity" class="visually-hidden">Quantité :</label>
-                                                    <select name="quantity" id="productQuantity" class="form-select w-auto mx-auto" aria-label="Sélection de la quantité de produit" required>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                        <option value="9">9</option>
-                                                        <option value="10">10</option>
-                                                    </select>
-                                                </div>
-                                            </form>
-                                        </td>
+                                        <td class="align-middle" id="productQuantity"></td>
                                         <td class="align-middle">
                                             <a class="link-dark" href="" aria-label="Suppression du produit" id="deleteProduct">
                                                 <span class="visually-hidden">Supprimer le produit</span>
@@ -220,7 +204,6 @@
             </div>
         </footer>
         <!-- Optional JavaScript -->
-        <script src="../js/teddy.js"></script>
-        <script src="../js/cart.js"></script>
+        <script defer src="../js/cart.js"></script>
     </body>
 </html>
