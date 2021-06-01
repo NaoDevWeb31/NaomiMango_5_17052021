@@ -72,7 +72,7 @@ Créer un premier MVP pour démontrer le fonctionnement des applications thémat
 
 ## Contraintes techniques
 
-- Aucune maquette n'est fourni
+- Aucune maquette n'est fournie
 - 2 fonctionnalités JS
   - localStorage pour le panier
   - les paramètres de requête de l’URL pour la page "produit"
