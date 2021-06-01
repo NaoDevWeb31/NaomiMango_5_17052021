@@ -13,12 +13,11 @@ Créer un premier MVP pour démontrer le fonctionnement des applications thémat
 - Prérequis
   - Node
   - `npm`
-- Cloner le repository GitHub https://github.com/OpenClassrooms-Student-Center/JWDP5.git
 - Dans le terminal
-  - se déplacer dans le dossier "JWDP5"
+  - se déplacer dans le dossier "backend"
   - exécuter `npm install`
   - exécuter `node server`
-  - si tout va bien, le serveur devrait s'exécuter on `localhost` avec par défaut le `port 3000` et affichera `Listening on port 3001`
+  - si tout va bien, le terminal affichera `Listening on port 3000` ou `Listening on port 3001`
 - Ouvrir le fichier index.html dans un navigateur
 
 ## Fonctionnalités
