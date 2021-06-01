@@ -347,17 +347,17 @@ button:not(:disabled),
   --bs-gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
-  margin-top: calc(var(--bs-gutter-y) * -1);
-  margin-right: calc(var(--bs-gutter-x) / -2);
-  margin-left: calc(var(--bs-gutter-x) / -2);
+  margin-top: 0;
+  margin-right: -0.75rem;
+  margin-left: -0.75rem;
 }
 .row > * {
   flex-shrink: 0;
   width: 100%;
   max-width: 100%;
-  padding-right: calc(var(--bs-gutter-x) / 2);
-  padding-left: calc(var(--bs-gutter-x) / 2);
-  margin-top: var(--bs-gutter-y);
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+  margin-top: 0;
 }
 
 .col {
