@@ -25,7 +25,7 @@ function fillPage(){
 function getCartList(){
     // Si la panier est vide
     if (getCart != null){
-        for (let i = getCart.length - 1; i >= 0; i--) {
+        for (let i = 0; i < getCart.length; i++) {
             let cartProduct = getCart[i];
             // Appel de l'API via fetch pour récupérer les données du stockage
             return fetch(urlApi + cartProduct._id)
