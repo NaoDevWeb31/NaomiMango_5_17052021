@@ -34,7 +34,7 @@ Créer un premier MVP pour démontrer le fonctionnement des applications thémat
 
 - Page “Produit”
 
-  - affichage dynamique l'élément sélectionné par l'utilisateur
+  - affichage dynamique de l'élément sélectionné par l'utilisateur
   - permettre de personnaliser le produit grâce un menu déroulant permettant à l'utilisateur de choisir une option de personnalisation. Cependant, celle-ci ne sera ni envoyée au serveur ni reflétée dans la réponse du serveur. La personnalisation du produit ne sera pas fonctionnelle pour le MVP
   - permettre d’ajouter le produit à son panier
 
@@ -66,7 +66,7 @@ Créer un premier MVP pour démontrer le fonctionnement des applications thémat
 
   - pour une requête GET : "/" qui retourne un tableau de tous les éléments
   - pour une requête GET : "\_id" qui renvoie l'élément correspondant à l'identifiant "given_id"
-  - pour une requête POST : "/order" qui retourne l'objet "contact" et le tableau "produits" (demandés dans le corps de la requête JSON) et "orderId" (string)
+  - pour une requête POST : "/order" qui retourne l'objet "contact" et le tableau "products" (demandés dans le corps de la requête JSON) et "orderId" (string)
 
 #### Validation des données
 
