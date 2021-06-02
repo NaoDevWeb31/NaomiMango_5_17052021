@@ -11,13 +11,17 @@ Créer un premier MVP pour démontrer le fonctionnement des applications thémat
 ## Installation
 
 - Prérequis
+
   - Node
   - `npm`
+
 - Dans le terminal
+
   - se déplacer dans le dossier "backend"
   - exécuter `npm install`
   - exécuter `node server`
   - si tout va bien, le terminal affichera `Listening on port 3000` ou `Listening on port 3001`
+
 - Ouvrir le fichier index.html dans un navigateur
 
 ## Fonctionnalités
@@ -41,12 +45,14 @@ Créer un premier MVP pour démontrer le fonctionnement des applications thémat
   - formulaire permettant de passer une commande (les données du formulaire doivent être correctes et bien formatées avant d'être renvoyées au back-end)
 
 - Page de confirmation de commande
+
   - remercier l'utilisateur pour sa commande
   - affichage du prix total et de l'identifiant de commande envoyé par le serveur
 
 #### Catégorie de produits présentés et type de données/produit
 
 - Ours en peluche faits à la main
+
   - colors (array de strings)
   - \_id (ObjectID)
   - name (string)
@@ -57,9 +63,10 @@ Créer un premier MVP pour démontrer le fonctionnement des applications thémat
 #### URL de l'API et ses paramètres
 
 - http://localhost:3000/api/teddies
-  - pour une requète GET : "/" qui retourne un tableau de tous les éléments
-  - pour une requète GET : "\_id" qui renvoie l'élément correspondant à l'identifiant "given_id"
-  - pour une requète POST : "/order" qui retourne l'objet "contact" et le tableau "produits" (demandés dans le corps de la requête JSON) et "orderId" (string)
+
+  - pour une requête GET : "/" qui retourne un tableau de tous les éléments
+  - pour une requête GET : "\_id" qui renvoie l'élément correspondant à l'identifiant "given_id"
+  - pour une requête POST : "/order" qui retourne l'objet "contact" et le tableau "produits" (demandés dans le corps de la requête JSON) et "orderId" (string)
 
 #### Validation des données
 
